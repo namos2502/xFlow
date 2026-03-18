@@ -65,7 +65,7 @@ Once installed, the following commands are available inside Claude Code:
 | `/cofluent:review` | Review staged diff or a specific file |
 | `/cofluent:help` | Show command reference |
 
-> Commands are namespaced as `/cofluent:*` when installed as a plugin. If you copy the files directly to `~/.claude/commands/`, they are available without the namespace (e.g., `/copilot-ask`, `/copilot-fix`).
+> Commands are namespaced as `/cofluent:*` when installed as a plugin. If you copy the files directly to `~/.claude/commands/`, they are available without the namespace (e.g., `/ask`, `/fix`).
 
 ## How it works
 
