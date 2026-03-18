@@ -1,0 +1,12 @@
+{
+  "name": "copilot-bridge",
+  "description": "Delegate tasks to GitHub Copilot CLI from Claude Code using programmatic copilot -p commands",
+  "version": "1.0.0",
+  "author": {
+    "name": "nunu"
+  },
+  "homepage": "https://github.com/nunu/copilot-bridge",
+  "repository": "https://github.com/nunu/copilot-bridge",
+  "license": "MIT",
+  "keywords": ["copilot", "github-copilot", "delegation", "cli", "bridge"]
+}
