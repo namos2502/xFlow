@@ -58,12 +58,12 @@ Once installed, the following commands are available inside Claude Code:
 
 | Command | Description |
 |---------|-------------|
-| `/cofluent:copilot-ask` | Ask Copilot a question (read-only, fast) |
-| `/cofluent:copilot-suggest` | Get a shell command suggestion |
-| `/cofluent:copilot-explain` | Explain a command, error, or snippet |
-| `/cofluent:copilot-fix` | Fix a bug or error (reads and writes files) |
-| `/cofluent:copilot-review` | Review staged diff or a specific file |
-| `/cofluent:copilot-help` | Show command reference |
+| `/cofluent:ask` | Ask Copilot a question (read-only, fast) |
+| `/cofluent:suggest` | Get a shell command suggestion |
+| `/cofluent:explain` | Explain a command, error, or snippet |
+| `/cofluent:fix` | Fix a bug or error (reads and writes files) |
+| `/cofluent:review` | Review staged diff or a specific file |
+| `/cofluent:help` | Show command reference |
 
 > Commands are namespaced as `/cofluent:*` when installed as a plugin. If you copy the files directly to `~/.claude/commands/`, they are available without the namespace (e.g., `/copilot-ask`, `/copilot-fix`).
 
