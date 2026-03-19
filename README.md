@@ -9,7 +9,7 @@ You know the feeling. You are deep in a vibe coding session — ideas flowing, C
 
 xFlow fixes that.
 
-Introducing **xFlow** — a cross-agent workflow plugin for AI agent CLI. It gives Claude the full programmatic reference for every CLI agent you use — flags, permissions, patterns, model choices — baked right in. Install it once, and Claude already knows how to speak Copilot, Claude CLI, and more. No interruptions, no setup tax, no context switching. You stay in the zone and Claude handles the handoff.
+Introducing **xFlow** — a cross-agent workflow plugin for AI agent CLI. It gives the AI the full programmatic reference for every CLI agent you use — flags, permissions, patterns, model choices — baked right in. Install it once, and Claude already knows how to speak Copilot, Claude CLI, and more. No interruptions, no setup tax, no context switching. You stay in the zone and Claude handles the handoff.
 
 The way it should work.
 
