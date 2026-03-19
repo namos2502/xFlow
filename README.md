@@ -9,7 +9,7 @@ You know the feeling. You are deep in a vibe coding session — ideas flowing, C
 
 xFlow fixes that.
 
-Introducing **xFlow** — a cross-agent workflow plugin for AI agent CLI. It gives the AI the full programmatic reference for every CLI agent you use — flags, permissions, patterns, model choices — baked right in. Install it once, and Claude already knows how to speak Copilot, Claude CLI, and more. No interruptions, no setup tax, no context switching. You stay in the zone and Claude handles the handoff.
+Introducing **xFlow** — a cross-agent workflow plugin for AI agent CLI. It gives the AI the full programmatic reference for every CLI agent you use — flags, permissions, patterns, model choices — baked right in. Install it once, and your AI agent already knows how to speak Copilot, Claude CLI, and more. No interruptions, no setup tax, no context switching. You stay in the zone, and the Agent handles the handoff.
 
 The way it should work.
 
@@ -17,7 +17,9 @@ The way it should work.
 
 **Stay in flow.** No context switching, no flag hunting, no setup tax. Claude already knows the programmatic reference for every supported CLI agent — baked right in.
 
-**Save tokens on Claude.** Every task you delegate runs in a separate subprocess. Only the final answer comes back into Claude's context window — not the reasoning chain, not the tool calls, not the intermediate output. This keeps Claude's context lean, reduces token consumption per session, and stretches your quota further.
+**Save tokens on your platform subscription** Every task you delegate runs in a separate subprocess. Only the final answer comes back into Claude's context window — not the reasoning chain, not the tool calls, not the intermediate output. This keeps Claude's context lean, reduces token consumption per session, and stretches your quota further.
+
+**Reduce your token spend** Every task you delegate runs in a separate subprocess — only the final answer comes back into Claude's context. No reasoning chains, no intermediate tool calls, no bloated history. Your context stays lean, and your monthly quota goes further.
 
 ## Get started
 
