@@ -37,22 +37,21 @@ Control which tools the Claude agent can use during the delegated task.
 | Prevent all shell execution | `--disallowedTools "Bash"` |
 | Prevent file writes | `--disallowedTools "Edit" "Write"` |
 
-### `--tools` — restrict available tool set
-
-| Use case | Flag value |
-|----------|-----------|
-| Disable all tools | `--tools ""` |
-| Limit to specific tools | `--tools "Bash,Edit,Read"` |
-
 ## Model selection (`--model`)
 
 | Task type | Recommended model |
 |-----------|------------------|
-| Quick questions, explanations, suggestions | `--model claude-haiku-4.5` |
+| Quick questions, explanations, suggestions | `--model claude-haiku-4-5` |
 | Complex fixes, reviews, multi-step tasks | `--model sonnet` (latest Sonnet) |
 | Highest quality reasoning | `--model opus` (latest Opus) |
 
 Use the short aliases `sonnet` and `opus` for the latest versions, or full model IDs (e.g. `claude-sonnet-4-6`) for pinned versions.
+
+## System prompt flags
+
+| Flag | Purpose |
+|------|---------|
+| `--append-system-prompt "TEXT"` | Append custom instructions to the default system prompt — use to inject task-specific context without replacing built-in behavior |
 
 ## Budget and safety flags
 
@@ -61,22 +60,23 @@ Use the short aliases `sonnet` and `opus` for the latest versions, or full model
 | `--max-turns N` | Limit the number of agentic turns — prevents runaway tasks (print mode only) |
 | `--max-budget-usd N` | Cap API spending for this call (print mode only, e.g. `--max-budget-usd 0.50`) |
 | `--fallback-model MODEL` | Fall back to this model if the primary is overloaded (print mode only) |
+| `--permission-mode plan` | Read-only planning mode — Claude can read and plan but cannot write files or run commands. Good safety default for analysis tasks |
 
 ## Common invocation patterns
 
 **Ask a question (read-only, fast):**
 ```bash
-claude -p "PROMPT" --output-format text --allowedTools "Read" --model claude-haiku-4.5 --no-session-persistence --max-turns 3
+claude -p "PROMPT" --output-format text --allowedTools "Read" --model claude-haiku-4-5 --no-session-persistence --max-turns 3
 ```
 
 **Suggest a shell command:**
 ```bash
-claude -p "Suggest a shell command to: TASK" --output-format text --allowedTools "Read" --model claude-haiku-4.5 --no-session-persistence --max-turns 2
+claude -p "Suggest a shell command to: TASK" --output-format text --allowedTools "Read" --model claude-haiku-4-5 --no-session-persistence --max-turns 2
 ```
 
 **Explain code or a command:**
 ```bash
-claude -p "Explain this: CONTENT" --output-format text --allowedTools "Read" --model claude-haiku-4.5 --no-session-persistence --max-turns 3
+claude -p "Explain this: CONTENT" --output-format text --allowedTools "Read" --model claude-haiku-4-5 --no-session-persistence --max-turns 3
 ```
 
 **Fix a bug or error (can write files):**
@@ -103,4 +103,4 @@ cat file.ts | claude -p "Explain this code" --output-format text --allowedTools 
 | Prevent questions | `--no-ask-user` | implied by `-p` |
 | Suppress updates | `--no-auto-update` | implied (use `--no-session-persistence`) |
 | Tool permissions | `--allow-tool='write, read'` | `--allowedTools "Read" "Edit"` |
-| Model selection | `--model=claude-haiku-4.5` | `--model claude-haiku-4.5` |
+| Model selection | `--model=claude-haiku-4-5` | `--model claude-haiku-4-5` |

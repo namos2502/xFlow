@@ -65,13 +65,6 @@ copilot -p "Fix this error: ERROR\n\nContext: CONTEXT" -s --no-ask-user --no-aut
 copilot -p "/review SCOPE" -s --no-ask-user --no-auto-update --no-color --allow-tool='shell(git:*), read'
 ```
 
-## Installation & auth
-
-```bash
-brew install copilot-cli      # macOS preferred
-copilot login                 # authenticate once
-```
-
 ## Notes
 
 - Always combine `-s`, `--no-ask-user`, `--no-auto-update`, and `--no-color` together for clean programmatic output.
