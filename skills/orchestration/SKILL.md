@@ -2,7 +2,6 @@
 name: xFlow Orchestration
 description: Cross-agent orchestration protocol. Teaches the host AI agent to act as a persistent control center — decomposing tasks, fanning out to peer CLI agents, receiving verified reports, and synthesizing results.
 when_to_use: always — loaded at session start when xFlow is installed
-version: 3.0.0
 ---
 
 # xFlow Orchestration

@@ -2,7 +2,6 @@
 name: Copilot CLI Agent
 description: Behavioral reference for GitHub Copilot CLI. Use when delegating GitHub-specific or GitHub-adjacent tasks via `copilot -p`.
 when_to_use: when delegating to Copilot CLI — see skills/orchestration/SKILL.md for routing decision
-version: 3.1.0
 ---
 
 # Copilot CLI Agent
