@@ -93,10 +93,10 @@ claude -p "..." --output-format text --allowedTools "Read"
 
 ## Supported agents
 
-| Agent | CLI | Status |
-|-------|-----|--------|
-| GitHub Copilot | `copilot -p` | ✅ Supported |
-| Claude | `claude -p` | ✅ Supported |
+| CLI         | CMD          | Status       |
+|-------------|--------------|--------------|
+| Copilot CLI | `copilot -p` | ✅ Supported |
+| Claude Code | `claude -p`  | ✅ Supported |
 
 ## License
 
