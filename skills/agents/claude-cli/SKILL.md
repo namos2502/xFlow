@@ -43,6 +43,7 @@ version: 3.1.0
 |-------|----------|-------|
 | ✅ Default | Questions, analysis | `--allowedTools "Read"` |
 | ⚠️ Escalate | Needs to modify files | `--allowedTools "Read" "Edit"` |
+| ⚠️ Escalate | Needs to create + modify files | `--allowedTools "Read" "Edit" "Write"` |
 | 🔴 Escalate + shell | Needs to run commands | `--allowedTools "Read" "Edit" "Bash(git *)"` |
 | 🔴 Explicit block | Ensure no shell runs | `--disallowedTools "Bash"` |
 
@@ -80,7 +81,7 @@ claude -p "[delegation prompt]" --output-format text \
 **Write delegation (fix, implement):**
 ```bash
 claude -p "[delegation prompt]" --output-format text \
-  --allowedTools "Read" "Edit" \
+  --allowedTools "Read" "Edit" "Write" \
   --no-session-persistence
 ```
 
