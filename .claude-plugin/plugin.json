@@ -1,7 +1,7 @@
 {
   "name": "xflow",
   "description": "Cross-agent workflow plugin — gives your agent the full programmatic reference for every CLI tool you use. One plugin. Every CLI. Stay in flow.",
-  "version": "0.5.0-beta",
+  "version": "0.5.0",
   "author": {
     "name": "namos2502"
   },
