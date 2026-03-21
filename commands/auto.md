@@ -2,18 +2,21 @@
 description: "Activate autonomous multi-agent mode — Claude will know when and how to invoke copilot -p or claude -p for the rest of this session"
 ---
 
-**Step 1 — Check if setup has been run:**
+⛔ **BEFORE ANYTHING ELSE — verify setup is complete:**
 
 Read `~/.claude/CLAUDE.md` and `~/.copilot/copilot-instructions.md`. Check whether each contains a `## xFlow` section.
 
-- If **neither** file has the section — stop and tell the user:
-  > ⚠️ xFlow is not set up yet. Run `/xflow:setup` first to detect your CLI agents and register xFlow, then run `/xflow:auto` again.
+If **neither** file contains a `## xFlow` section:
+> **STOP. Do not load skills. Do not activate. Do not proceed.**
+> Tell the user: ⚠️ xFlow is not set up yet. Run `/xflow:setup` first to detect your CLI agents and register xFlow, then re-run `/xflow:auto`.
 
-- If **only one** file has the section — warn the user setup may be incomplete and suggest re-running `/xflow:setup`, then proceed to Step 2.
+If **only one** file has the section — warn the user that setup may be incomplete and suggest re-running `/xflow:setup`. Then proceed.
 
-- If **both** files have the section — proceed to Step 2.
+If **both** files have the section — proceed.
 
-**Step 2 — Load skills and activate:**
+---
+
+**Load skills and activate:**
 
 Read and load the following skill files into your context for this session:
 

@@ -2,6 +2,12 @@
 
 All notable changes to xFlow will be documented here.
 
+## [0.5.3] — 2026-03-21
+
+### Fixed
+- `/xflow:auto` guard restructured from a soft "Step 1" bullet to a hard `⛔ STOP` block — models were reading past the conditional and activating regardless; now the gate is unambiguous and precedes the activation section entirely
+- `/xflow:setup` now ends every confirmation with a prompt to run `/xflow:auto` next — closes the gap where users had no clear signal of what to do after setup
+
 ## [0.5.2] — 2026-03-21
 
 ### Added

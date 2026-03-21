@@ -11,6 +11,8 @@ xFlow fixes that.
 
 **xFlow** is a cross-agent orchestration plugin for your AI agent CLI. It turns your active AI agent into a persistent **control center** that decomposes tasks, delegates to other CLI agents, and manages the full workflow — while you stay focused on what you're building.
 
+> **Note:** xFlow is designed for use with 2 or more AI CLI platforms. To get the most out of cross-agent workflows, you need access to at least two supported CLI agents (e.g. Copilot CLI + Claude Code).
+
 ## How it works
 
 xFlow uses a **Control Center → Agents** model:
@@ -35,8 +37,6 @@ No context bloat. No manual coordination. The workflow just happens.
 **Stay in flow.** Your active CLI knows how to route tasks, which agent to use, and how to handle the results — without you managing it.
 
 **Reduce your token spend.** Every delegated subtask runs in a separate subprocess. Only the final report comes back into your context — no reasoning chains, no intermediate tool calls.
-
-**Extend without friction.** Adding a new CLI agent = drop a `skills/agents/<name>/SKILL.md` file. No other changes needed.
 
 ## Get started
 
@@ -140,4 +140,4 @@ The orchestration skill teaches your CLI when and how to delegate:
 
 ## License
 
-MIT
+This project is licensed under the MIT License
