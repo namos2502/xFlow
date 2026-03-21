@@ -88,6 +88,9 @@ Redirect stderr if needed: add `2>/dev/null`
 
 Follow the template from `skills/orchestration/SKILL.md`. Include the structured report format instructions at the end of every prompt.
 
+⛔ **Critical:** Always include this exact line in your delegation prompt:
+*"Return ONLY the structured report. No reasoning steps, no 'Let me...' output before the report."*
+
 ## Handling the Report
 
 The agent's stdout is its report. Capture it directly:

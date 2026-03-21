@@ -105,6 +105,13 @@ cat file.ts | claude -p "[delegation prompt]" --output-format text \
 
 Follow the template from `skills/orchestration/SKILL.md`. Include the structured report format instructions at the end of every prompt.
 
+**Status semantics for analysis tasks:**
+- ✅ Verified = you read the code and completed the analysis — even if you cannot *run* it
+- ⚠️ Partial = you could not access required files, or the diff was truncated
+- ❌ Failed = the `gh` command failed or the diff was inaccessible
+
+⛔ Do NOT use ⚠️ just because you cannot execute the code being reviewed. Static analysis that is complete = ✅.
+
 ## Handling the Report
 
 The agent's stdout is its report. Capture it directly:

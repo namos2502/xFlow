@@ -69,7 +69,7 @@ New task →
 [Task]: <one sentence — what needs to be done>
 [Context]: <only what the agent strictly needs>
 [Success criteria]: <how the agent knows it's done>
-[Report format]: Return ONLY this when finished:
+[Report format]: Return ONLY this when finished. Plain text labels only — no **bold**, no # headers:
   STATUS: ✅ Verified / ⚠️ Partial / ❌ Failed
   SUMMARY: <1-2 sentences>
   STEPS: <bullets>
@@ -140,6 +140,28 @@ If unavailable: fall back to another agent, handle natively, or tell the user to
 ## Cross-Agent Chaining
 
 Fan out to multiple Agents in parallel when tasks are independent. Pass a report excerpt (SUMMARY + STEPS) as context into the next delegation prompt — never raw output. Agents do not chain to each other; all coordination happens at the control center.
+
+**Avoid duplicate fetches:** When multiple agents need the same source data (e.g. a PR diff, a file's contents), fetch it once in the control center and pass it as `[Context]` in each delegation prompt. Do not let each agent re-fetch the same data independently.
+
+## Synthesis Step
+
+After all agent reports are received, produce a single consolidated output for the user. Never surface raw agent output — always synthesize.
+
+```
+**[Task / PR title]**
+
+| Agent   | Status | Key finding     |
+|---------|--------|-----------------|
+| Copilot | ✅     | <SUMMARY>       |
+| Claude  | ⚠️     | <SUMMARY>       |
+
+**Issues:**
+- 🔴 <critical>
+- 🟠 <significant>
+- 🟡 <minor>
+
+**Verdict:** <one sentence recommendation>
+```
 
 ## Red Flags — STOP
 
