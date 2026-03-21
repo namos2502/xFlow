@@ -1,6 +1,6 @@
 ---
 name: xFlow Orchestration
-description: Cross-agent orchestration protocol. Teaches the host CLI to act as a persistent control center — decomposing tasks, delegating to CLI agents, receiving verified reports, and managing workflow state.
+description: Cross-agent orchestration protocol. Teaches the host AI agent to act as a persistent control center — decomposing tasks, fanning out to peer CLI agents, receiving verified reports, and synthesizing results.
 when_to_use: always — loaded at session start when xFlow is installed
 version: 3.0.0
 ---
@@ -9,7 +9,7 @@ version: 3.0.0
 
 ## Overview
 
-xFlow turns your active CLI into a **control center** that delegates subtasks to other CLI agents. Each agent executes in isolation, self-verifies, and returns a structured report. You stay in context — the result comes back, the noise stays out.
+xFlow turns your active AI agent into a **control center** that fans out tasks to peer CLI agents. Each agent executes in isolation, self-verifies, and returns a structured report. You stay in context — results come back, intermediate noise stays out.
 
 **Core principle:** Delegate with a clear reason. Review every report before proceeding.
 
@@ -22,15 +22,17 @@ NO CROSS-CLI DELEGATION WITHOUT A CLEAR REASON.
 NO PROCEEDING WITHOUT REVIEWING THE REPORT.
 ```
 
-## The Three-Tier Model
+## The Two-Tier Model
 
 ```
-CONTROL CENTER (your active CLI)
-  └── MANAGER (optional — receives complex subtask, orchestrates internally)
-        └── ENGINEER (leaf — execute → self-verify → report)
+CONTROL CENTER (your AI agent — decomposes, routes, reviews)
+  ├── AGENT (Copilot CLI)
+  ├── AGENT (Claude CLI)
+  └── AGENT (future-cli ...)
+        └── [own tools & sub-agents — internal, platform-native]
 ```
 
-The control center holds the plan. Managers decompose internally. Engineers execute and report. Every tier returns the same structured report — the control center never needs to know how deep the work went.
+The control center IS your active AI agent — it holds the plan and directs the work. Each Agent is a full CLI agent in its own right, not a dumb executor. It can use its own platform-native tools and sub-agents internally to complete the task. The tree is one level deep: Agents are peers, they don't chain to each other. Width scales as you add agents; depth stays fixed.
 
 ## When to Delegate Cross-CLI
 
@@ -138,7 +140,7 @@ If unavailable: fall back to another agent, handle natively, or tell the user to
 
 ## Cross-Agent Chaining
 
-Pass excerpts of a report as context into the next delegation prompt. Max 2 levels of cross-CLI delegation below the control center. Managers use their platform-native tools — no further cross-CLI chaining at the leaf level.
+Fan out to multiple Agents in parallel when tasks are independent. Pass a report excerpt (SUMMARY + STEPS) as context into the next delegation prompt — never raw output. Agents do not chain to each other; all coordination happens at the control center.
 
 ## Red Flags — STOP
 
@@ -148,7 +150,7 @@ Pass excerpts of a report as context into the next delegation prompt. Max 2 leve
 - Marking ✅ without running verification
 - Retrying a ❌ task without reading ISSUES first
 - Delegating a task that needs current session context
-- Chaining more than 2 levels deep
+- Agents chaining to each other (all coordination goes through the control center)
 
 ## Quick Reference
 

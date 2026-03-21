@@ -9,22 +9,24 @@ You know the feeling. You are deep in a vibe coding session — ideas flowing, y
 
 xFlow fixes that.
 
-**xFlow** is a cross-agent orchestration plugin for your AI agent CLI. It turns your active CLI into a persistent **control center** that can decompose tasks, delegate subtasks to other CLI agents, and manage the full workflow — while you stay focused on what you're building.
+**xFlow** is a cross-agent orchestration plugin for your AI agent CLI. It turns your active AI agent into a persistent **control center** that decomposes tasks, delegates to other CLI agents, and manages the full workflow — while you stay focused on what you're building.
 
 ## How it works
 
-xFlow uses a **Control Center → Manager → Engineer** model:
+xFlow uses a **Control Center → Agents** model:
 
 ```
-CONTROL CENTER (your active CLI)
-  └── MANAGER (CLI agent — optional, for complex subtasks)
-        └── ENGINEER (CLI agent — executes, self-verifies, reports)
+CONTROL CENTER (your AI agent — decomposes, routes, reviews)
+  ├── AGENT (Copilot CLI)
+  ├── AGENT (Claude CLI)
+  └── AGENT (future-cli ...)
+        └── [own tools & sub-agents — internal, platform-native]
 ```
 
-- The **control center** holds the plan, dispatches subtasks, reviews reports, and tracks state
-- Each delegated agent **self-verifies its own work** before reporting back
+- The **control center** is your active AI agent. It holds the plan, fans out tasks to the right CLI agents (in parallel or in sequence), and reviews every report before proceeding.
+- Each **agent** is a full CLI agent in its own right — not just an executor. It can use its own platform-native tools and sub-agents internally, then self-verifies and reports back.
+- The tree is **one level deep**. Agents are peers — they don't chain to each other. Width scales as you add agents; depth stays fixed.
 - Every agent returns a **structured report** (~150 words: status, steps, files changed, issues)
-- The final result returns to your context via stdout — intermediate work stays isolated
 
 No context bloat. No manual coordination. The workflow just happens.
 
