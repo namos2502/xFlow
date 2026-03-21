@@ -33,13 +33,13 @@ Always combine `-s --no-ask-user --no-auto-update --no-color` for clean programm
 
 ## Tool Permissions (`--allow-tool`)
 
-Pre-approves tools so the agent doesn't pause to prompt. **Default to read-only. Only escalate with a clear reason.**
+Pre-approves tools so the agent doesn't pause to prompt.
 
-| Level | Use case | Flag |
-|-------|----------|------|
-| ✅ Default | Questions, analysis, review | `--allow-tool='read'` |
-| ⚠️ Escalate | Needs to modify files | `--allow-tool='write, read'` |
-| 🔴 Escalate + shell | Needs to run git commands | `--allow-tool='write, shell(git:*), read'` |
+| Use case | Flag |
+|----------|------|
+| Questions, analysis, review | `--allow-tool='read'` |
+| Modify or create files | `--allow-tool='write, read'` |
+| Modify files + run git commands | `--allow-tool='write, shell(git:*), read'` |
 
 Shell access (`shell(...)`) is a separate, deliberate decision — not an automatic addition to write access. Only grant it when the task genuinely requires running commands.
 

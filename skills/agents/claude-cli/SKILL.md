@@ -32,24 +32,22 @@ version: 3.1.0
 
 ## Tool Permissions
 
-**Default to read-only. Only escalate with a clear reason.**
-
 | Flag | Purpose |
 |------|---------|
 | `--allowedTools "TOOL"` | Tools that auto-execute without a permission prompt |
 | `--disallowedTools "TOOL"` | Tools removed from the model's context entirely |
 
-| Level | Use case | Flags |
-|-------|----------|-------|
-| ✅ Default | Questions, analysis | `--allowedTools "Read"` |
-| ⚠️ Escalate | Needs to modify files | `--allowedTools "Read" "Edit"` |
-| ⚠️ Escalate | Needs to create + modify files | `--allowedTools "Read" "Edit" "Write"` |
-| 🔴 Escalate + shell | Needs to run commands | `--allowedTools "Read" "Edit" "Bash(git *)"` |
-| 🔴 Explicit block | Ensure no shell runs | `--disallowedTools "Bash"` |
+| Use case | Flags |
+|----------|-------|
+| Questions, analysis | `--allowedTools "Read"` |
+| Modify existing files | `--allowedTools "Read" "Edit"` |
+| Create + modify files | `--allowedTools "Read" "Edit" "Write"` |
+| Create + modify files + run commands | `--allowedTools "Read" "Edit" "Write" "Bash(git *)"` |
+| Explicitly block shell | `--disallowedTools "Bash"` |
 
-`"Edit"` modifies existing files. `"Write"` creates new files — only add it if the task explicitly needs to create files.
+`"Edit"` modifies existing files. `"Write"` creates new files — add it when the task may need to create files.
 
-Shell access (`Bash(...)`) is a separate, deliberate decision. When in doubt, use `--disallowedTools "Bash"` to prevent any shell execution, even if the model tries.
+Shell access (`Bash(...)`) is a separate, deliberate decision. Use `--disallowedTools "Bash"` to prevent any shell execution, even if the model tries.
 
 ## Safety Flags
 
