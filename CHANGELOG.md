@@ -2,6 +2,14 @@
 
 All notable changes to xFlow will be documented here.
 
+## [0.5.1] — 2026-03-21
+
+### Added
+- `/xflow:cleanup` — removes the `## xFlow` sections from `~/.claude/CLAUDE.md` and `~/.copilot/copilot-instructions.md` added during setup
+
+### Changed
+- `/xflow:help` — simplified to plugin info and getting started guide; no longer shows internal skill structure
+
 ## [0.5.0-beta]
 
 ### Changed — Breaking

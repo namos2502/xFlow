@@ -78,7 +78,8 @@ Requires Claude Code v1.0.33+.
 |---------|-------------|
 | `/xflow:setup` | One-time setup — detects agents, authenticates, registers xFlow as always-on in `~/.claude/CLAUDE.md` |
 | `/xflow:auto` | Explicitly load all skills and activate orchestration mode for this session |
-| `/xflow:help` | Show skill and command reference |
+| `/xflow:cleanup` | Remove xFlow configuration added by setup |
+| `/xflow:help` | Show plugin information and commands |
 
 ## Under the hood
 
