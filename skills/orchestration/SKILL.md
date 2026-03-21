@@ -82,6 +82,7 @@ New task →
 3. **Dispatch** — Use delegation prompt template. Always include scope, success criteria, report format.
 4. **Review** — Read STATUS first. Spot-check if needed (`git diff`, tests). Decide: proceed, re-assign, or adjust.
 5. **Track** — Update state (done / pending / failed). Never skip to the next subtask without reviewing the current report.
+6. **Synthesize** — When all subtasks are done, produce one consolidated output for the user. Lead with issues (🔴 critical / 🟠 significant / 🟡 minor), then overall status and verdict. Never surface raw agent output.
 
 ## Delegation Prompt Template
 
@@ -171,12 +172,6 @@ If unavailable: fall back to another agent, handle natively, or tell the user to
 Fan out to multiple Agents in parallel when tasks are independent. Pass a report excerpt (SUMMARY + STEPS) as context into the next delegation prompt — never raw output. Agents do not chain to each other; all coordination happens at the control center.
 
 **Avoid duplicate fetches:** When multiple agents need the same source data (e.g. a PR diff, a file's contents), fetch it once in the control center and pass it as `[Context]` in each delegation prompt. Do not let each agent re-fetch the same data independently.
-
-## Synthesis Step
-
-After all agent reports are received, produce a single consolidated output for the user. Never surface raw agent output — always synthesize.
-
-Lead with issues (🔴 critical / 🟠 significant / 🟡 minor), then a brief overall status and verdict. Only include a per-agent breakdown if knowing which agent found what adds meaningful context.
 
 ## Red Flags — STOP
 
