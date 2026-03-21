@@ -110,3 +110,6 @@ Fill in the actual agent status from Step 1 before writing.
 
 - ✅ All installed agents authenticated and both instruction files updated — tell the user xFlow is ready and always-on in Claude Code and Copilot CLI.
 - ✅ Instruction files already had the section — tell the user xFlow was already configured. Offer to re-run auth check if needed.
+
+In all cases, end with:
+> 🚀 Run `/xflow:auto` to activate multi-agent mode for this session.
