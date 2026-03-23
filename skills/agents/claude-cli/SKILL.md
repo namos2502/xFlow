@@ -135,7 +135,7 @@ Read STATUS first. If ⚠️ or ❌, read ISSUES before deciding next action.
 | Failure | Action |
 |---------|--------|
 | Command not found | Tell user: `npm install -g @anthropic-ai/claude-code` |
-| Auth failure | Tell user: `claude auth login` then re-run `/xflow:setup` |
+| Auth failure | Tell user: `claude auth login` then re-run `/cortexlink:setup` |
 | Budget exceeded | Increase `--max-budget-usd` or handle natively |
 | Unexpected output | Retry once. If still failing, handle natively. |
 

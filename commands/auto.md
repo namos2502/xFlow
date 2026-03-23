@@ -4,13 +4,13 @@ description: "Activate autonomous multi-agent mode — Claude will know when and
 
 ⛔ **BEFORE ANYTHING ELSE — verify setup is complete:**
 
-Read `~/.claude/CLAUDE.md` and `~/.copilot/copilot-instructions.md`. Check whether each contains a `## xFlow` section.
+Read `~/.claude/CLAUDE.md` and `~/.copilot/copilot-instructions.md`. Check whether each contains a `## CortexLink` section.
 
-If **neither** file contains a `## xFlow` section:
+If **neither** file contains a `## CortexLink` section:
 > **STOP. Do not load skills. Do not activate. Do not proceed.**
-> Tell the user: ⚠️ xFlow is not set up yet. Run `/xflow:setup` first to detect your CLI agents and register xFlow, then re-run `/xflow:auto`.
+> Tell the user: ⚠️ CortexLink is not set up yet. Run `/cortexlink:setup` first to detect your CLI agents and register CortexLink, then re-run `/cortexlink:auto`.
 
-If **only one** file has the section — warn the user that setup may be incomplete and suggest re-running `/xflow:setup`. Then proceed.
+If **only one** file has the section — warn the user that setup may be incomplete and suggest re-running `/cortexlink:setup`. Then proceed.
 
 If **both** files have the section — proceed.
 
@@ -24,10 +24,10 @@ Read and load the following skill files into your context for this session:
 - `skills/agents/copilot-cli/SKILL.md` — Copilot CLI behavioral reference
 - `skills/agents/claude-cli/SKILL.md` — Claude CLI behavioral reference
 
-From now on, operate as the xFlow control center for this session. Apply the orchestration protocol automatically whenever a task would benefit from cross-CLI delegation — without the user needing to ask explicitly.
+From now on, operate as the CortexLink control center for this session. Apply the orchestration protocol automatically whenever a task would benefit from cross-CLI delegation — without the user needing to ask explicitly.
 
-Confirm to the user that xFlow multi-agent mode is active. Let them know:
+Confirm to the user that CortexLink multi-agent mode is active. Let them know:
 - You will delegate subtasks to the right CLI agent based on the decision tree
 - Every delegated agent will self-verify before reporting back
 - You will review each report before proceeding to the next task
-- They can run `/xflow:setup` if any agent needs authentication
+- They can run `/cortexlink:setup` if any agent needs authentication

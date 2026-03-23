@@ -1,21 +1,21 @@
-# xFlow
+# CortexLink
 
 > One plugin. Every CLI. Stay in flow.
 
 [![License: MIT](https://img.shields.io/badge/License-MIT-blue.svg)](LICENSE)
-[![GitHub](https://img.shields.io/badge/GitHub-namos2502%2FxFlow-181717?logo=github)](https://github.com/namos2502/xFlow)
+[![GitHub](https://img.shields.io/badge/GitHub-namos2502%2FCortexLink-181717?logo=github)](https://github.com/namos2502/CortexLink)
 
 You know the feeling. You are deep in a vibe coding session — ideas flowing, your agent keeping up — and then you need to hand something off to another CLI tool. Suddenly you are out of the zone, hunting for the right flags, checking docs, figuring out what `--allow-tool` even accepts. The flow breaks.
 
-xFlow fixes that.
+CortexLink fixes that.
 
-**xFlow** is a cross-agent orchestration plugin for your AI agent CLI. It turns your active AI agent into a persistent **control center** that decomposes tasks, delegates to other CLI agents, and manages the full workflow — while you stay focused on what you're building.
+**CortexLink** is a cross-agent orchestration plugin for your AI agent CLI. It turns your active AI agent into a persistent **control center** that decomposes tasks, delegates to other CLI agents, and manages the full workflow — while you stay focused on what you're building.
 
-> **Note:** xFlow is designed for use with 2 or more AI CLI platforms. To get the most out of cross-agent workflows, you need access to at least two supported CLI agents (e.g. Copilot CLI + Claude Code).
+> **Note:** CortexLink is designed for use with 2 or more AI CLI platforms. To get the most out of cross-agent workflows, you need access to at least two supported CLI agents (e.g. Copilot CLI + Claude Code).
 
 ## How it works
 
-xFlow uses a **Control Center → Agents** model:
+CortexLink uses a **Control Center → Agents** model:
 
 ```
 CONTROL CENTER (your AI agent — decomposes, routes, reviews)
@@ -32,7 +32,7 @@ CONTROL CENTER (your AI agent — decomposes, routes, reviews)
 
 No context bloat. No manual coordination. The workflow just happens.
 
-## Why xFlow
+## Why CortexLink
 
 **Stay in flow.** Your active CLI knows how to route tasks, which agent to use, and how to handle the results — without you managing it.
 
@@ -54,11 +54,11 @@ npm install -g @anthropic-ai/claude-code
 claude auth login
 ```
 
-Then install xFlow from inside Claude Code:
+Then install CortexLink from inside Claude Code:
 
 ```
 /plugin marketplace add namos2502/agent-plugins
-/plugin install xflow@agent-plugins
+/plugin install cortexlink@agent-plugins
 /reload-plugins
 ```
 
@@ -67,10 +67,10 @@ Then install xFlow from inside Claude Code:
 Then run setup once:
 
 ```
-/xflow:setup
+/cortexlink:setup
 ```
 
-This detects which CLI agents are installed, verifies authentication, and registers xFlow in your `~/.claude/CLAUDE.md` so it's active in every future session — no need to run anything again.
+This detects which CLI agents are installed, verifies authentication, and registers CortexLink in your `~/.claude/CLAUDE.md` so it's active in every future session — no need to run anything again.
 
 ## Updating
 
@@ -78,17 +78,17 @@ To get the latest version:
 
 ```
 /plugin marketplace update agent-plugins
-/plugin update xflow@agent-plugins
+/plugin update cortexlink@agent-plugins
 ```
 
 Then restart Claude Code to pick up any new or changed commands.
 
 ## Uninstalling
 
-To remove xFlow completely:
+To remove CortexLink completely:
 
-1. Run `/xflow:cleanup` — removes the xFlow sections added to `~/.claude/CLAUDE.md` and `~/.copilot/copilot-instructions.md`
-2. Run `/plugin uninstall xflow@agent-plugins` — removes the plugin files
+1. Run `/cortexlink:cleanup` — removes the CortexLink sections added to `~/.claude/CLAUDE.md` and `~/.copilot/copilot-instructions.md`
+2. Run `/plugin uninstall cortexlink@agent-plugins` — removes the plugin files
 
 Requires Claude Code v1.0.33+.
 
@@ -96,14 +96,14 @@ Requires Claude Code v1.0.33+.
 
 | Command | What it does |
 |---------|-------------|
-| `/xflow:setup` | One-time setup — detects agents, authenticates, registers xFlow as always-on in `~/.claude/CLAUDE.md` |
-| `/xflow:auto` | Explicitly load all skills and activate orchestration mode for this session |
-| `/xflow:cleanup` | Remove xFlow configuration added by setup |
-| `/xflow:help` | Show plugin information and commands |
+| `/cortexlink:setup` | One-time setup — detects agents, authenticates, registers CortexLink as always-on in `~/.claude/CLAUDE.md` |
+| `/cortexlink:auto` | Explicitly load all skills and activate orchestration mode for this session |
+| `/cortexlink:cleanup` | Remove CortexLink configuration added by setup |
+| `/cortexlink:help` | Show plugin information and commands |
 
 ## Under the hood
 
-xFlow uses a skill-per-concern architecture:
+CortexLink uses a skill-per-concern architecture:
 
 ```
 skills/
@@ -118,7 +118,7 @@ skills/
       SKILL.md
 ```
 
-After `/xflow:setup`, the `~/.claude/CLAUDE.md` block makes xFlow always-on — the orchestration protocol activates automatically every session. `/xflow:auto` is available as an explicit override if needed.
+After `/cortexlink:setup`, the `~/.claude/CLAUDE.md` block makes CortexLink always-on — the orchestration protocol activates automatically every session. `/cortexlink:auto` is available as an explicit override if needed.
 
 ## Routing
 

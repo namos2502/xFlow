@@ -105,7 +105,7 @@ Read STATUS first. If ⚠️ or ❌, read ISSUES before deciding next action.
 | Failure | Action |
 |---------|--------|
 | Command not found | Tell user: `brew install copilot-cli` |
-| Auth failure / no output | Tell user: `copilot login` then re-run `/xflow:setup` |
+| Auth failure / no output | Tell user: `copilot login` then re-run `/cortexlink:setup` |
 | Unexpected output format | Retry once. If still malformed, handle the task natively. |
 
 ## Chaining

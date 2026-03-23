@@ -1,5 +1,5 @@
 ---
-description: "One-time setup — detects installed CLI agents, authenticates, and registers xFlow as always-on in ~/.claude/CLAUDE.md and ~/.copilot/copilot-instructions.md"
+description: "One-time setup — detects installed CLI agents, authenticates, and registers CortexLink as always-on in ~/.claude/CLAUDE.md and ~/.copilot/copilot-instructions.md"
 ---
 
 Run the following steps in order and report the results clearly to the user.
@@ -26,7 +26,7 @@ brew install copilot-cli   # macOS
 npm install -g @anthropic-ai/claude-code
 ```
 
-Then ask the user to re-run `/xflow:setup` after installing at least one agent.
+Then ask the user to re-run `/cortexlink:setup` after installing at least one agent.
 
 **Step 2 — Verify authentication for each installed agent:**
 
@@ -42,18 +42,18 @@ claude -p "ping" --output-format text --allowedTools "Read" --max-turns 1 --no-s
 ```
 If this fails, tell the user to run `claude auth login`.
 
-**Step 3 — Register xFlow in ~/.claude/CLAUDE.md:**
+**Step 3 — Register CortexLink in ~/.claude/CLAUDE.md:**
 
-Read `~/.claude/CLAUDE.md` (create it if it does not exist). Check whether it already contains a `## xFlow` section.
+Read `~/.claude/CLAUDE.md` (create it if it does not exist). Check whether it already contains a `## CortexLink` section.
 
-- If the section **already exists** — skip the write and tell the user xFlow is already configured.
+- If the section **already exists** — skip the write and tell the user CortexLink is already configured.
 - If the section **does not exist** — append the following block exactly:
 
 ```markdown
 
-## xFlow
+## CortexLink
 
-xFlow is installed and active. It gives you a persistent control center for cross-agent CLI delegation.
+CortexLink is installed and active. It gives you a persistent control center for cross-agent CLI delegation.
 
 **How it works:** When you take on a multi-step task, decompose it into subtasks and delegate each to the right CLI agent. Each agent self-verifies its work and returns a structured report. You review the report before proceeding.
 
@@ -67,25 +67,25 @@ xFlow is installed and active. It gives you a persistent control center for cros
 - Claude CLI: [✅ installed / ❌ not found]
 
 **Commands:**
-- `/xflow:auto` — load all skills and activate orchestration mode explicitly
-- `/xflow:setup` — re-run this setup (re-auth, update agent status)
-- `/xflow:help` — show skill and command reference
+- `/cortexlink:auto` — load all skills and activate orchestration mode explicitly
+- `/cortexlink:setup` — re-run this setup (re-auth, update agent status)
+- `/cortexlink:help` — show skill and command reference
 ```
 
 Fill in the actual agent status from Step 1 before writing.
 
-**Step 4 — Register xFlow in ~/.copilot/copilot-instructions.md:**
+**Step 4 — Register CortexLink in ~/.copilot/copilot-instructions.md:**
 
-Read `~/.copilot/copilot-instructions.md` (create it if it does not exist). Check whether it already contains a `## xFlow` section.
+Read `~/.copilot/copilot-instructions.md` (create it if it does not exist). Check whether it already contains a `## CortexLink` section.
 
 - If the section **already exists** — skip the write.
 - If the section **does not exist** — append the following block exactly:
 
 ```markdown
 
-## xFlow
+## CortexLink
 
-xFlow is installed and active. It gives you a persistent control center for cross-agent CLI delegation.
+CortexLink is installed and active. It gives you a persistent control center for cross-agent CLI delegation.
 
 **How it works:** When you take on a multi-step task, decompose it into subtasks and delegate each to the right CLI agent. Each agent self-verifies its work and returns a structured report. You review the report before proceeding.
 
@@ -99,17 +99,17 @@ xFlow is installed and active. It gives you a persistent control center for cros
 - Claude CLI: [✅ installed / ❌ not found]
 
 **Commands:**
-- `/xflow:auto` — load all skills and activate orchestration mode explicitly
-- `/xflow:setup` — re-run this setup (re-auth, update agent status)
-- `/xflow:help` — show skill and command reference
+- `/cortexlink:auto` — load all skills and activate orchestration mode explicitly
+- `/cortexlink:setup` — re-run this setup (re-auth, update agent status)
+- `/cortexlink:help` — show skill and command reference
 ```
 
 Fill in the actual agent status from Step 1 before writing.
 
 **Step 5 — Confirm:**
 
-- ✅ All installed agents authenticated and both instruction files updated — tell the user xFlow is ready and always-on in Claude Code and Copilot CLI.
-- ✅ Instruction files already had the section — tell the user xFlow was already configured. Offer to re-run auth check if needed.
+- ✅ All installed agents authenticated and both instruction files updated — tell the user CortexLink is ready and always-on in Claude Code and Copilot CLI.
+- ✅ Instruction files already had the section — tell the user CortexLink was already configured. Offer to re-run auth check if needed.
 
 In all cases, end with:
-> 🚀 Run `/xflow:auto` to activate multi-agent mode for this session.
+> 🚀 Run `/cortexlink:auto` to activate multi-agent mode for this session.

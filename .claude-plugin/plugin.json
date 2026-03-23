@@ -1,12 +1,12 @@
 {
-  "name": "xflow",
+  "name": "cortexlink",
   "description": "Cross-agent workflow plugin — gives your agent the full programmatic reference for every CLI tool you use. One plugin. Every CLI. Stay in flow.",
-  "version": "0.5.4",
+  "version": "0.5.5",
   "author": {
     "name": "namos2502"
   },
-  "homepage": "https://github.com/namos2502/xFlow",
-  "repository": "https://github.com/namos2502/xFlow",
+  "homepage": "https://github.com/namos2502/CortexLink",
+  "repository": "https://github.com/namos2502/CortexLink",
   "license": "MIT",
   "keywords": ["copilot", "github-copilot", "claude", "cli", "skills", "reference", "multi-agent"]
 }

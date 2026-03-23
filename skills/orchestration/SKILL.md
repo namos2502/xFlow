@@ -4,11 +4,11 @@ description: Cross-agent orchestration protocol. Teaches the host AI agent to ac
 
 ---
 
-# xFlow Orchestration
+# CortexLink Orchestration
 
 ## Overview
 
-xFlow turns your active AI agent into a **control center** that fans out tasks to peer CLI agents. Each agent executes in isolation, self-verifies, and returns a structured report. You stay in context — results come back, intermediate noise stays out.
+CortexLink turns your active AI agent into a **control center** that fans out tasks to peer CLI agents. Each agent executes in isolation, self-verifies, and returns a structured report. You stay in context — results come back, intermediate noise stays out.
 
 **Core principle:** Delegate with a clear reason. Review every report before proceeding.
 
@@ -153,7 +153,7 @@ which copilot 2>/dev/null && copilot -p "ping" -s --no-ask-user --no-auto-update
 which claude 2>/dev/null && claude -p "ping" --output-format text --allowedTools "Read" --max-turns 1 --no-session-persistence 2>/dev/null | head -1
 ```
 
-If unavailable: fall back to another agent, handle natively, or tell the user to run `/xflow:setup`.
+If unavailable: fall back to another agent, handle natively, or tell the user to run `/cortexlink:setup`.
 
 ## Error Handling
 
@@ -163,7 +163,7 @@ If unavailable: fall back to another agent, handle natively, or tell the user to
 | ⚠️ | Read ISSUES, accept partial or re-assign unverified parts |
 | ❌ | Read ISSUES. Re-assign, adjust scope, or handle natively |
 | No output | Retry once. If still failing, handle natively. |
-| Auth failure | Tell user: `/xflow:setup` |
+| Auth failure | Tell user: `/cortexlink:setup` |
 
 **After 2 consecutive ❌ on the same subtask — stop and discuss with the user before retrying.**
 
@@ -190,5 +190,5 @@ Fan out to multiple Agents in parallel when tasks are independent. Pass a report
 | GitHub task | Copilot — see `skills/agents/copilot-cli/SKILL.md` |
 | General code task | Claude CLI — see `skills/agents/claude-cli/SKILL.md` |
 | Add a new agent | Drop `skills/agents/<name>/SKILL.md` — follow existing format |
-| Handle auth failure | Tell user: `/xflow:setup` |
+| Handle auth failure | Tell user: `/cortexlink:setup` |
 | Handle ❌ report | Read ISSUES. Re-assign or handle natively. Never retry blindly. |
