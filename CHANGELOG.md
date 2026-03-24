@@ -2,6 +2,15 @@
 
 All notable changes to CortexLink will be documented here.
 
+## [0.5.7] — 2026-03-24
+
+### Improved
+- **Commands:** Added `allowed-tools` frontmatter to `setup` (Read, Edit, Bash) and `cleanup` (Read, Edit) — prevents unexpected permission prompts during the most critical user interactions
+- **Commands:** Fixed `help` command directive style — replaced indirect "Reply to the user with..." with direct output instruction
+- **Skills:** All three skill descriptions rewritten to third-person trigger format ("This skill should be used when...") for reliable auto-activation
+- **Skills:** Added `user-invocable: false` to `orchestration`, `copilot-cli`, and `claude-cli` skills — these are internal protocol skills, not user-invocable actions
+- **Skills:** Split `orchestration/SKILL.md` (8.8 KB → 5.3 KB) — delegation prompt template and report format details extracted to `references/delegation-template.md` and `references/report-format.md` for progressive disclosure
+
 ## [0.5.6] — 2026-03-23
 
 ### Fixed

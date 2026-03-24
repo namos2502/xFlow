@@ -1,5 +1,6 @@
 ---
 description: "Remove CortexLink configuration added by /cortexlink:setup"
+allowed-tools: Read, Edit
 ---
 
 Remove the CortexLink sections that were added during setup. Run the following steps in order.

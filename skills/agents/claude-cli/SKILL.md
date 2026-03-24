@@ -1,7 +1,7 @@
 ---
 name: claude-cli
-description: Behavioral reference for Claude CLI. Use when delegating general code tasks, analysis, or tasks requiring Anthropic-native reasoning via `claude -p`.
-
+description: This skill should be used when delegating general code tasks — explanations, refactors, fixes, analysis — via `claude -p`. Also use when context isolation or a specific Anthropic model is needed for the subtask.
+user-invocable: false
 ---
 
 # Claude CLI Agent

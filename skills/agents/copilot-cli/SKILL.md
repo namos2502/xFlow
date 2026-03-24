@@ -1,7 +1,7 @@
 ---
 name: copilot-cli
-description: Behavioral reference for GitHub Copilot CLI. Use when delegating GitHub-specific or GitHub-adjacent tasks via `copilot -p`.
-
+description: This skill should be used when delegating GitHub-specific tasks — PRs, issues, repos, Actions, branches, code review — via `copilot -p`. Use it when Copilot CLI's GitHub-native tooling is an advantage over the host agent.
+user-invocable: false
 ---
 
 # Copilot CLI Agent

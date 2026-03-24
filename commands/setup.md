@@ -1,5 +1,6 @@
 ---
 description: "One-time setup — detects installed CLI agents, authenticates, and registers CortexLink as always-on in ~/.claude/CLAUDE.md and ~/.copilot/copilot-instructions.md"
+allowed-tools: Read, Edit, Bash
 ---
 
 Run the following steps in order and report the results clearly to the user.

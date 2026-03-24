@@ -2,7 +2,7 @@
 description: "Show CortexLink plugin information and how to get started"
 ---
 
-Reply to the user with the following information:
+Output the following to the user:
 
 **CortexLink** — One plugin. Every CLI. Stay in flow.
 
