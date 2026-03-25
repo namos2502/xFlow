@@ -98,7 +98,7 @@ claude -p "[delegation prompt]" --output-format text \
 ```bash
 claude -p "[delegation prompt]" --output-format text \
   --cwd $(git rev-parse --show-toplevel) \
-  --allowedTools "Read" "Edit" "Bash(git *)" \
+  --allowedTools "Read" "Edit" "Write" "Bash(git *)" \
   --no-session-persistence
 ```
 
@@ -144,7 +144,7 @@ Read STATUS first. If ⚠️ or ❌, read ISSUES before deciding next action.
 |--|-------------|------------|
 | Tool permissions | `--allow-tool='write, read'` | `--allowedTools "Read" "Edit"` |
 | Prevent questions | `--no-ask-user` | implied by `-p` |
-| Working directory | `--cwd PATH` | `--cwd PATH` |
+| Working directory | `cd $(git rev-parse --show-toplevel) &&` | `--cwd PATH` |
 | Model flag | `--model=claude-haiku-4.5` | `--model claude-haiku-4-5` |
 
 ## Error Handling
