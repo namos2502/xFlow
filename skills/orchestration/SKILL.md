@@ -19,6 +19,9 @@ CortexLink turns your active AI agent into a **control center** that fans out ta
 ```
 NO CROSS-CLI DELEGATION WITHOUT A CLEAR REASON.
 NO PROCEEDING WITHOUT REVIEWING THE REPORT.
+ONE AGENT PER SUBTASK — never delegate the same subtask to more than one agent.
+Claude Code → Copilot CLI (GitHub tasks) or Claude CLI (last resort for isolated tasks).
+Copilot CLI → Claude CLI.
 ```
 
 ## The Two-Tier Model
@@ -46,6 +49,12 @@ Classify every task before routing. This determines how much spec detail to writ
 **Key signal for Complex:** rework cost. Tasks with irreversible steps (PRs, commits, deploys) or required judgment calls always qualify.
 
 ## When to Delegate Cross-CLI
+
+Each subtask goes to exactly **ONE agent** — the decision tree picks which one, then stop. Never route the same subtask to both agents simultaneously.
+
+**Peer direction by host:**
+- **Claude Code** → Copilot CLI for GitHub tasks; Claude CLI only as last resort (when context isolation or a specific Anthropic model is needed AND native tools are insufficient)
+- **Copilot CLI** → Claude CLI for code tasks, analysis, and refactors
 
 **Delegate when:**
 1. **Platform-specific** — GitHub ops (PRs, repos, Actions) → Copilot; Anthropic reasoning or Claude-specific model → Claude CLI
@@ -79,7 +88,7 @@ New task →
 
 1. **Decompose** — Break into scoped, independently executable subtasks. Each must be verifiable by the agent itself.
 2. **Route** — Apply decision tree. Check agent availability (see `references/report-format.md`).
-3. **Dispatch** — Use delegation prompt template (see `references/delegation-template.md`). Always include scope, success criteria, report format.
+3. **Dispatch** — Use delegation prompt template (see `references/delegation-template.md`). Always include scope, success criteria, report format. Each subtask goes to ONE agent — never dispatch the same work to two agents. Always use bash with `-p` (programmatic/print mode); never open an interactive terminal session.
 4. **Review** — Read STATUS first. Spot-check if needed (`git diff`, tests). Decide: proceed, re-assign, or adjust.
 5. **Track** — Update state (done / pending / failed). Never skip to the next subtask without reviewing the current report.
 6. **Synthesize** — Consolidate into one output for the user. Lead with issues (🔴 blocker / 🟠 should fix / 🟡 minor), then a one-sentence verdict. If any subtask is ❌, hold the verdict until resolved.
@@ -93,6 +102,9 @@ New task →
 - Retrying a ❌ task without reading ISSUES first
 - Delegating a task that needs current session context
 - Agents chaining to each other (all coordination goes through the control center)
+- Delegating the same subtask to more than one agent (one subtask → one agent, always)
+- Opening an interactive terminal session for delegation (always use `-p` programmatic mode)
+- Claude Code delegating to Claude CLI when native tools (Task tool, inline work) would suffice
 
 ## Quick Reference
 

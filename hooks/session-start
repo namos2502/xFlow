@@ -23,11 +23,13 @@ escape_for_json() {
 
 orchestration_escaped=$(escape_for_json "$orchestration_content")
 
-session_context="<EXTREMELY_IMPORTANT>\nYou have CortexLink — a cross-agent workflow plugin.\n\nBelow is your orchestration skill. It defines when and how to delegate tasks across CLI agents (Copilot CLI, Claude CLI). Follow it whenever multi-agent delegation could apply.\n\n${orchestration_escaped}\n</EXTREMELY_IMPORTANT>"
+peer_direction="PEER DIRECTION RULES (apply these every time you delegate):\n- If you are Claude Code (Claude): GitHub tasks → Copilot CLI. Isolated code/analysis tasks → Claude CLI (last resort only — prefer native tools first).\n- If you are Copilot CLI: code tasks, analysis, and refactors → Claude CLI.\n- ONE agent per subtask. Never route the same subtask to more than one agent.\n- Always use bash with -p flag (programmatic mode). Never open an interactive terminal session.\n- Violating any of these rules violates the spirit of CortexLink."
+
+session_context="<EXTREMELY_IMPORTANT>\nYou have CortexLink — a cross-agent workflow plugin.\n\nBelow is your orchestration skill. It defines when and how to delegate tasks across CLI agents (Copilot CLI, Claude CLI). Follow it whenever multi-agent delegation could apply.\n\n${orchestration_escaped}\n\n${peer_direction}\n</EXTREMELY_IMPORTANT>"
 
 # Platform detection: emit the field consumed by the current platform only.
-# Cursor sets CURSOR_PLUGIN_ROOT (may also set CLAUDE_PLUGIN_ROOT).
-# Claude Code sets CLAUDE_PLUGIN_ROOT only.
+# Claude Code and Copilot CLI both set CLAUDE_PLUGIN_ROOT (shared plugin architecture).
+# Cursor IDE sets CURSOR_PLUGIN_ROOT (not a supported CortexLink platform — kept as fallback).
 # Emitting both fields would cause double injection in Claude Code.
 #
 # Uses printf instead of heredoc to avoid a bash 5.3+ bug where heredoc

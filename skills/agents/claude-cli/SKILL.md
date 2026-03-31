@@ -8,6 +8,10 @@ user-invocable: false
 
 ## When to Use
 
+⛔ If the host is **Claude Code**: use Claude CLI only when you specifically need context isolation or a different Anthropic model AND native tools (Task tool, inline work) are insufficient. Claude Code → Claude CLI is last resort. Prefer Copilot CLI for GitHub tasks; prefer Claude Code's native Task tool for general code tasks.
+
+---
+
 **Use Claude CLI for:**
 - General code tasks — explanations, refactors, fixes, analysis
 - Tasks needing Anthropic-specific models (Sonnet, Opus, Haiku)
