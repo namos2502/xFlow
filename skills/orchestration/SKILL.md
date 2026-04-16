@@ -88,7 +88,7 @@ New task →
 
 1. **Decompose** — Break into scoped, independently executable subtasks. Each must be verifiable by the agent itself.
 2. **Route** — Apply decision tree. Check agent availability (see `references/report-format.md`).
-3. **Dispatch** — Use delegation prompt template (see `references/delegation-template.md`). Always include scope, success criteria, report format. Each subtask goes to ONE agent — never dispatch the same work to two agents. Always use bash with `-p` (programmatic/print mode); never open an interactive terminal session.
+3. **Dispatch** — Use delegation prompt template (see `references/delegation-template.md`). Always include scope, success criteria, report format. Each subtask goes to ONE agent — never dispatch the same work to two agents. Always run the target CLI in programmatic mode (`copilot -p` / `claude -p`); never open an interactive terminal session.
 4. **Review** — Read STATUS first. Spot-check if needed (`git diff`, tests). Decide: proceed, re-assign, or adjust.
 5. **Track** — Update state (done / pending / failed). Never skip to the next subtask without reviewing the current report.
 6. **Synthesize** — Consolidate into one output for the user. Lead with issues (🔴 blocker / 🟠 should fix / 🟡 minor), then a one-sentence verdict. If any subtask is ❌, hold the verdict until resolved.
@@ -103,7 +103,7 @@ New task →
 - Delegating a task that needs current session context
 - Agents chaining to each other (all coordination goes through the control center)
 - Delegating the same subtask to more than one agent (one subtask → one agent, always)
-- Opening an interactive terminal session for delegation (always use `-p` programmatic mode)
+- Opening an interactive terminal session for delegation (always run the target CLI with `-p` programmatic mode)
 - Claude Code delegating to Claude CLI when native tools (Task tool, inline work) would suffice
 
 ## Quick Reference
