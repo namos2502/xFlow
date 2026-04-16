@@ -28,18 +28,19 @@ peer_direction="PEER DIRECTION RULES (apply these every time you delegate):\n- I
 session_context="<EXTREMELY_IMPORTANT>\nYou have CortexLink — a cross-agent workflow plugin.\n\nBelow is your orchestration skill. It defines when and how to delegate tasks across CLI agents (Copilot CLI, Claude CLI). Follow it whenever multi-agent delegation could apply.\n\n${orchestration_escaped}\n\n${peer_direction}\n</EXTREMELY_IMPORTANT>"
 
 # Platform detection: emit the field consumed by the current platform only.
-# Claude Code and Copilot CLI both set CLAUDE_PLUGIN_ROOT (shared plugin architecture).
-# Cursor IDE sets CURSOR_PLUGIN_ROOT (not a supported CortexLink platform — kept as fallback).
+# Cursor sets CURSOR_PLUGIN_ROOT. Claude Code sets CLAUDE_PLUGIN_ROOT without COPILOT_CLI.
+# Copilot CLI sets CLAUDE_PLUGIN_ROOT *and* COPILOT_CLI=1 — it uses the SDK-standard
+# top-level "additionalContext" field, not Claude Code's nested hookSpecificOutput.
 # Emitting both fields would cause double injection in Claude Code.
 #
 # Uses printf instead of heredoc to avoid a bash 5.3+ bug where heredoc
 # variable expansion hangs when content exceeds ~512 bytes.
 if [ -n "${CURSOR_PLUGIN_ROOT:-}" ]; then
     printf '{\n  "additional_context": "%s"\n}\n' "$session_context"
-elif [ -n "${CLAUDE_PLUGIN_ROOT:-}" ]; then
+elif [ -n "${CLAUDE_PLUGIN_ROOT:-}" ] && [ -z "${COPILOT_CLI:-}" ]; then
     printf '{\n  "hookSpecificOutput": {\n    "hookEventName": "SessionStart",\n    "additionalContext": "%s"\n  }\n}\n' "$session_context"
 else
-    printf '{\n  "additional_context": "%s"\n}\n' "$session_context"
+    printf '{\n  "additionalContext": "%s"\n}\n' "$session_context"
 fi
 
 exit 0

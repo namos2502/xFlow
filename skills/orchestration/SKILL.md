@@ -110,8 +110,8 @@ New task →
 
 | I want to… | Do this |
 |------------|---------|
-| GitHub task | Copilot — see `skills/agents/copilot-cli/SKILL.md` |
-| General code task | Claude CLI — see `skills/agents/claude-cli/SKILL.md` |
+| GitHub task | Copilot — load `cortexlink:copilot-cli` via the Skill tool |
+| General code task | Claude CLI — load `cortexlink:claude-cli` via the Skill tool |
 | Delegation prompt | See `references/delegation-template.md` |
 | Report format / self-verify | See `references/report-format.md` |
 | Add a new agent | Drop `skills/agents/<name>/SKILL.md` — follow existing format |
