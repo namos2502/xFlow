@@ -2,6 +2,27 @@
 
 All notable changes to CortexLink will be documented here.
 
+## [0.5.8] — 2026-05-01
+
+### Added
+- **Commands:** `doctor` command — replaces `auto`; symptom-first diagnostic that checks platform, plugin files, hook health, CLI agents, and setup state. Announces side effects before running; requires confirmation for live auth pings
+- **Skills:** `--bare` flag added to claude-cli skill — skips CLAUDE.md, hooks, skills, MCP on startup for faster scripted delegation calls
+- **Skills:** `--effort` flag added to claude-cli skill — maps to orchestration complexity levels (default for Standard, `high`/`xhigh`/`max` for Complex); Claude models only
+
+### Improved
+- **Commands:** `setup` now announces the exact block it will write before appending to CLAUDE.md / copilot-instructions.md (write preview)
+- **Commands:** `help` simplified to one get-started step; commands table updated to reference `doctor`
+- **Skills:** Model & Effort table in claude-cli skill aligned with orchestration complexity levels (Simple/Standard/Complex)
+
+### Removed
+- **Commands:** `auto` command removed — hook + skill auto-activation makes it redundant
+
+### Docs
+- **README:** Prerequisites section added (no version pinning)
+- **README:** `[!WARNING]` restart callout added
+- **README:** Troubleshooting section added (5 symptom→fix entries)
+- **Hooks:** Cursor comment removed from `session-start` — Cursor is not in scope
+
 ## [0.5.7] — 2026-03-24
 
 ### Improved
