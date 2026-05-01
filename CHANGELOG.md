@@ -2,6 +2,25 @@
 
 All notable changes to CortexLink will be documented here.
 
+## [0.5.7] — 2026-03-24
+
+### Improved
+- **Commands:** Added `allowed-tools` frontmatter to `setup` (Read, Edit, Bash) and `cleanup` (Read, Edit) — restricts tool availability to the minimum required set (does not suppress permission prompts; use `--allow-tool` at session level for that)
+- **Commands:** Fixed `help` command directive style — replaced indirect "Reply to the user with..." with direct output instruction
+- **Skills:** All three skill descriptions rewritten to third-person trigger format ("This skill should be used when...") for reliable auto-activation
+- **Skills:** Added `user-invocable: false` to `orchestration`, `copilot-cli`, and `claude-cli` skills — these are internal protocol skills, not user-invocable actions
+- **Skills:** Split `orchestration/SKILL.md` (8.8 KB → 5.3 KB) — delegation prompt template and report format details extracted to `references/delegation-template.md` and `references/report-format.md` for progressive disclosure
+
+## [0.5.6] — 2026-03-23
+
+### Fixed
+- Removed `-s` flag from all Copilot CLI invocation patterns — causes exit code 1, not a valid flag for programmatic use
+- Copilot CLI sandbox fix: no `--cwd` flag exists; all invocations now `cd` to repo root first (`cd $(git rev-parse --show-toplevel) &&`) — prevents silent file access failures under `--no-ask-user` when invoked from a subdirectory
+- `--allow-tool` values corrected to no-space format (`'write,read'`, `'write,shell(git:*),read'`)
+- Model updated to `--model=claude-sonnet-4-5` for real tasks (was "omit"); `--model=claude-haiku-4.5` kept for availability checks only
+- Claude CLI: added `--cwd $(git rev-parse --show-toplevel)` to all invocation patterns — same sandbox restriction applies
+- Orchestration detection command: removed `-s`, added `cd` to repo root
+
 ## [0.5.5] — 2026-03-23
 
 ### Changed
@@ -43,7 +62,7 @@ All notable changes to CortexLink will be documented here.
 ### Fixed
 - `/cortexlink:help` — removed stray `---` from command body that was being parsed as a second frontmatter block, causing Claude to show its default greeting instead of the help content
 
-## [0.5.0-beta]
+## [0.5.0-beta] — 2026-03-21
 
 ### Changed — Breaking
 - **Architecture:** Complete redesign from passive flag-reference plugin to active control center orchestration system

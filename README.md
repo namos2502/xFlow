@@ -38,6 +38,11 @@ No context bloat. No manual coordination. The workflow just happens.
 
 **Reduce your token spend.** Every delegated subtask runs in a separate subprocess. Only the final result comes back into your context — no reasoning chains, no intermediate tool calls.
 
+## Prerequisites
+
+- **Claude Code** — CortexLink is a Claude Code plugin
+- **At least one supported CLI agent** installed and authenticated (see Get started below)
+
 ## Get started
 
 Before installing, make sure you have at least one supported CLI agent set up.
@@ -62,7 +67,8 @@ Then install CortexLink from inside Claude Code:
 /reload-plugins
 ```
 
-> **Note:** If commands don't appear after `/reload-plugins`, restart Claude Code completely — a full restart is sometimes needed to pick up new commands.
+> [!WARNING]
+> If commands don't appear after `/reload-plugins`, fully quit Claude Code (Cmd+Q on macOS, close the window on Windows) and relaunch. `/reload-plugins` does not always pick up new commands without a full restart.
 
 Then run setup once:
 
@@ -70,7 +76,7 @@ Then run setup once:
 /cortexlink:setup
 ```
 
-This detects which CLI agents are installed, verifies authentication, and registers CortexLink in your `~/.claude/CLAUDE.md` so it's active in every future session — no need to run anything again.
+This detects which CLI agents are installed, verifies authentication, and activates CortexLink — the `SessionStart` hook will inject orchestration context automatically on every future session.
 
 ## Updating
 
@@ -90,14 +96,28 @@ To remove CortexLink completely:
 1. Run `/cortexlink:cleanup` — removes the CortexLink sections added to `~/.claude/CLAUDE.md` and `~/.copilot/copilot-instructions.md`
 2. Run `/plugin uninstall cortexlink@agent-plugins` — removes the plugin files
 
-Requires Claude Code v1.0.33+.
+## Troubleshooting
 
-## Commands
+**Commands don't appear after `/reload-plugins`**
+Fully quit Claude Code (Cmd+Q on macOS, close the window on Windows) and relaunch. `/reload-plugins` does not always pick up new commands without a full restart.
+
+**The SessionStart hook doesn't seem to be injecting context**
+Run `/cortexlink:doctor` — it checks the hook script, verifies `jq` is installed, and test-runs the hook to confirm it produces valid output.
+
+**Setup reports an agent as not found but it's installed**
+The agent binary may not be on Claude Code's PATH. Open a terminal and run `which copilot` or `which claude`. If it's found there but not in setup, your shell PATH may differ from Claude Code's environment — check your shell config (`~/.zshrc`, `~/.bashrc`).
+
+**Auth check fails but I'm already logged in**
+Re-run the login command (`copilot login` or `claude auth login`). Plugin sandboxing can sometimes make cached tokens appear invalid — a fresh login usually fixes it.
+
+**Delegation fails or the agent doesn't respond**
+Run `/cortexlink:doctor` to check agent auth and hook status. Verify the agent binary is on PATH (see above). Make sure the agent isn't already running interactively in another terminal.
+
 
 | Command | What it does |
 |---------|-------------|
 | `/cortexlink:setup` | One-time setup — detects agents, authenticates, registers CortexLink as always-on in `~/.claude/CLAUDE.md` |
-| `/cortexlink:auto` | Explicitly load all skills and activate orchestration mode for this session |
+| `/cortexlink:doctor` | Diagnose the SessionStart hook, plugin files, and agent auth — asks about symptoms before running checks |
 | `/cortexlink:cleanup` | Remove CortexLink configuration added by setup |
 | `/cortexlink:help` | Show plugin information and commands |
 
@@ -118,7 +138,7 @@ skills/
       SKILL.md
 ```
 
-After `/cortexlink:setup`, the `~/.claude/CLAUDE.md` block makes CortexLink always-on — the orchestration protocol activates automatically every session. `/cortexlink:auto` is available as an explicit override if needed.
+After `/cortexlink:setup`, the `SessionStart` hook injects the orchestration protocol automatically on every new session — no extra command needed. Run `/cortexlink:doctor` if anything seems off.
 
 ## Routing
 

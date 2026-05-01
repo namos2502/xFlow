@@ -1,12 +1,16 @@
 ---
 name: claude-cli
-description: Behavioral reference for Claude CLI. Use when delegating general code tasks, analysis, or tasks requiring Anthropic-native reasoning via `claude -p`.
-
+description: This skill should be used when delegating general code tasks — explanations, refactors, fixes, analysis — via `claude -p`. Also use when context isolation or a specific Anthropic model is needed for the subtask.
+user-invocable: false
 ---
 
 # Claude CLI Agent
 
 ## When to Use
+
+⛔ If the host is **Claude Code**: use Claude CLI only when you specifically need context isolation or a different Anthropic model AND native tools (Task tool, inline work) are insufficient. Claude Code → Claude CLI is last resort. Prefer Copilot CLI for GitHub tasks; prefer Claude Code's native Task tool for general code tasks.
+
+---
 
 **Use Claude CLI for:**
 - General code tasks — explanations, refactors, fixes, analysis
@@ -28,6 +32,7 @@ description: Behavioral reference for Claude CLI. Use when delegating general co
 | `--output-format json` | Structured JSON with metadata |
 | `--no-session-persistence` | Do not save session to disk — keeps scripted calls clean |
 | `--max-turns N` | Cap agentic turns — prevents runaway tasks |
+| `--bare` | Minimal mode: skip auto-discovery of hooks, skills, plugins, MCP servers, auto memory, and CLAUDE.md so scripted calls start faster. Claude has access to Bash, file read, and file edit tools |
 
 ## Tool Permissions
 
@@ -53,52 +58,79 @@ Shell access (`Bash(...)`) is a separate, deliberate decision. Use `--disallowed
 | Flag | Purpose |
 |------|---------|
 | `--max-budget-usd N` | Cap API spend (e.g. `--max-budget-usd 0.50`) |
+| `--effort LEVEL` | Set the effort level: `low`, `medium`, `high`, `xhigh`, `max` — available levels depend on the model. Session-scoped, does not persist |
 | `--permission-mode plan` | Read-only planning mode — no writes or shell, overrides `--allowedTools` |
 | `--append-system-prompt "TEXT"` | Inject task-specific instructions into the system prompt |
 
-## Model Selection
+## Model & Effort Selection
 
-| Task | Flag |
-|------|-------|
-| Quick question, analysis | `--model claude-haiku-4-5` |
-| Complex fix, multi-step | `--model sonnet` |
-| Highest quality reasoning | `--model opus` |
+| Task complexity | Model | Effort |
+|-----------------|-------|--------|
+| **Standard** — analysis, single fix | `--model sonnet` | *(default)* |
+| **Complex** — multi-step, judgment calls | `--model sonnet` | `--effort high` *(or `xhigh`/`max`)* |
+| Quick availability check / ping | `--model claude-haiku-4-5` | *(default)* |
 
-Use short aliases (`sonnet`, `opus`) for the latest version, or full IDs (e.g. `claude-sonnet-4-6`) to pin a specific model.
+Use short aliases (`sonnet`, `opus`) for the latest version, or full IDs (e.g. `claude-sonnet-4-6`) to pin a specific model. Omit `--effort` to use the model default. `--effort` is only available for Claude models — omit it when using non-Claude models. Complexity levels are defined in the orchestration skill.
+
+## Working Directory
+
+Claude CLI is sandboxed to its working directory — the same restriction as Copilot CLI.
+
+⛔ **Always invoke from the repo root.** Use `--cwd` or `cd` before invoking.
+
+```bash
+claude -p "..." --cwd $(git rev-parse --show-toplevel) --output-format text ...
+```
 
 ## Invocation Patterns
+
+Always include `--append-system-prompt` with the CortexLink agent context below. This teaches the agent the report format and self-verify protocol via the system prompt — separate from the task prompt.
+
+```
+CORTEXLINK_AGENT_CONTEXT="You are operating as a CortexLink agent. Your output is consumed directly by a control center. Execute the task, verify your own work (Execute → Verify → fix if needed → Report), then return ONLY this structured report — plain text labels, no bold, no headers:\nSTATUS: ✅ Verified / ⚠️ Partial / ❌ Failed\nSUMMARY: <1-2 sentences>\nSTEPS:\n  - <step>\nFILES: <changed files or none>\nISSUES: <notes or none>\nMax 150 words. Never mark ✅ without actually checking. For analysis tasks, ✅ = completed the analysis even if you cannot run the code."
+```
 
 **Read-only delegation (question, analysis):**
 ```bash
 claude -p "[delegation prompt]" --output-format text \
+  --cwd $(git rev-parse --show-toplevel) \
   --allowedTools "Read" --model claude-haiku-4-5 \
-  --no-session-persistence --max-turns 3
+  --no-session-persistence --max-turns 3 \
+  --append-system-prompt "$CORTEXLINK_AGENT_CONTEXT"
 ```
 
 **Write delegation (fix, implement):**
 ```bash
 claude -p "[delegation prompt]" --output-format text \
+  --cwd $(git rev-parse --show-toplevel) \
   --allowedTools "Read" "Edit" "Write" \
-  --no-session-persistence
+  --no-session-persistence \
+  --append-system-prompt "$CORTEXLINK_AGENT_CONTEXT"
 ```
 
 **Write delegation + shell (runs commands):**
 ```bash
 claude -p "[delegation prompt]" --output-format text \
-  --allowedTools "Read" "Edit" "Bash(git *)" \
-  --no-session-persistence
+  --cwd $(git rev-parse --show-toplevel) \
+  --allowedTools "Read" "Edit" "Write" "Bash(git *)" \
+  --no-session-persistence \
+  --append-system-prompt "$CORTEXLINK_AGENT_CONTEXT"
 ```
 
 **Planning / analysis only (no writes):**
 ```bash
 claude -p "[delegation prompt]" --output-format text \
-  --permission-mode plan --no-session-persistence --max-turns 5
+  --cwd $(git rev-parse --show-toplevel) \
+  --permission-mode plan --no-session-persistence --max-turns 5 \
+  --append-system-prompt "$CORTEXLINK_AGENT_CONTEXT"
 ```
 
 **Piped input:**
 ```bash
 cat file.ts | claude -p "[delegation prompt]" --output-format text \
-  --allowedTools "Read" --no-session-persistence
+  --cwd $(git rev-parse --show-toplevel) \
+  --allowedTools "Read" --no-session-persistence \
+  --append-system-prompt "$CORTEXLINK_AGENT_CONTEXT"
 ```
 
 ## Delegation Prompt
@@ -116,7 +148,10 @@ Follow the template from `skills/orchestration/SKILL.md`. Include the structured
 
 The agent's stdout is its report. Capture it directly:
 ```bash
-REPORT=$(claude -p "[prompt]" --output-format text --allowedTools "Read" --no-session-persistence 2>/dev/null)
+REPORT=$(claude -p "[prompt]" --output-format text \
+  --cwd $(git rev-parse --show-toplevel) \
+  --allowedTools "Read" --no-session-persistence \
+  --append-system-prompt "$CORTEXLINK_AGENT_CONTEXT" 2>/dev/null)
 ```
 
 Read STATUS first. If ⚠️ or ❌, read ISSUES before deciding next action.
@@ -126,8 +161,8 @@ Read STATUS first. If ⚠️ or ❌, read ISSUES before deciding next action.
 | | Copilot CLI | Claude CLI |
 |--|-------------|------------|
 | Tool permissions | `--allow-tool='write, read'` | `--allowedTools "Read" "Edit"` |
-| Silence | `-s` | `--output-format text` |
 | Prevent questions | `--no-ask-user` | implied by `-p` |
+| Working directory | `cd $(git rev-parse --show-toplevel) &&` | `--cwd PATH` |
 | Model flag | `--model=claude-haiku-4.5` | `--model claude-haiku-4-5` |
 
 ## Error Handling

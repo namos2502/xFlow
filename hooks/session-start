@@ -1,0 +1,43 @@
+#!/usr/bin/env bash
+# SessionStart hook for CortexLink plugin
+
+set -euo pipefail
+
+SCRIPT_DIR="$(cd "$(dirname "$0")" && pwd)"
+PLUGIN_ROOT="$(cd "${SCRIPT_DIR}/.." && pwd)"
+
+# Read orchestration skill — the CortexLink meta skill
+orchestration_content=$(cat "${PLUGIN_ROOT}/skills/orchestration/SKILL.md" 2>&1 || echo "Error reading orchestration skill")
+
+peer_direction="PEER DIRECTION RULES (apply these every time you delegate):
+- If you are Claude Code (Claude): GitHub tasks → Copilot CLI. Isolated code/analysis tasks → Claude CLI (last resort only — prefer native tools first).
+- If you are Copilot CLI: code tasks, analysis, and refactors → Claude CLI.
+- ONE agent per subtask. Never route the same subtask to more than one agent.
+- Always use bash with -p (prompt flag). Never open an interactive terminal session.
+- Violating any of these rules violates the spirit of CortexLink."
+
+session_context="<EXTREMELY_IMPORTANT>
+You have CortexLink — a cross-agent workflow plugin.
+
+Below is your orchestration skill. It defines when and how to delegate tasks across CLI agents (Copilot CLI, Claude CLI). Follow it whenever multi-agent delegation could apply.
+
+${orchestration_content}
+
+${peer_direction}
+</EXTREMELY_IMPORTANT>"
+
+# Platform detection: emit the field consumed by the current platform only.
+# Claude Code sets CLAUDE_PLUGIN_ROOT without COPILOT_CLI.
+# Copilot CLI sets CLAUDE_PLUGIN_ROOT *and* COPILOT_CLI=1 — it uses the SDK-standard
+# top-level "additionalContext" field, not Claude Code's nested hookSpecificOutput.
+# Emitting both fields would cause double injection in Claude Code.
+#
+# jq is used to build JSON to safely handle %, \, ", and all control characters.
+if [ -n "${CLAUDE_PLUGIN_ROOT:-}" ] && [ -z "${COPILOT_CLI:-}" ]; then
+    jq -n --arg ctx "$session_context" \
+        '{"hookSpecificOutput": {"hookEventName": "SessionStart", "additionalContext": $ctx}}'
+else
+    jq -n --arg ctx "$session_context" '{"additionalContext": $ctx}'
+fi
+
+exit 0

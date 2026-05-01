@@ -1,5 +1,6 @@
 ---
 description: "One-time setup — detects installed CLI agents, authenticates, and registers CortexLink as always-on in ~/.claude/CLAUDE.md and ~/.copilot/copilot-instructions.md"
+allowed-tools: Read, Edit, Write, Bash
 ---
 
 Run the following steps in order and report the results clearly to the user.
@@ -32,7 +33,7 @@ Then ask the user to re-run `/cortexlink:setup` after installing at least one ag
 
 For Copilot CLI (if installed):
 ```bash
-copilot -p "ping" -s --no-ask-user --no-auto-update --no-color --allow-tool='read' --model=claude-haiku-4.5 2>/dev/null
+cd $(git rev-parse --show-toplevel) && copilot -p "ping" --no-ask-user --no-auto-update --no-color --allow-tool='read' --model=claude-haiku-4.5 2>/dev/null
 ```
 If this fails, tell the user to run `copilot login`.
 
@@ -47,7 +48,7 @@ If this fails, tell the user to run `claude auth login`.
 Read `~/.claude/CLAUDE.md` (create it if it does not exist). Check whether it already contains a `## CortexLink` section.
 
 - If the section **already exists** — skip the write and tell the user CortexLink is already configured.
-- If the section **does not exist** — append the following block exactly:
+- If the section **does not exist** — tell the user: "Appending CortexLink section to `~/.claude/CLAUDE.md`…" and show the block below, then append it exactly:
 
 ```markdown
 
@@ -67,8 +68,8 @@ CortexLink is installed and active. It gives you a persistent control center for
 - Claude CLI: [✅ installed / ❌ not found]
 
 **Commands:**
-- `/cortexlink:auto` — load all skills and activate orchestration mode explicitly
 - `/cortexlink:setup` — re-run this setup (re-auth, update agent status)
+- `/cortexlink:doctor` — diagnose the SessionStart hook, agents, and plugin files
 - `/cortexlink:help` — show skill and command reference
 ```
 
@@ -79,7 +80,7 @@ Fill in the actual agent status from Step 1 before writing.
 Read `~/.copilot/copilot-instructions.md` (create it if it does not exist). Check whether it already contains a `## CortexLink` section.
 
 - If the section **already exists** — skip the write.
-- If the section **does not exist** — append the following block exactly:
+- If the section **does not exist** — tell the user: "Appending CortexLink section to `~/.copilot/copilot-instructions.md`…" and show the block below, then append it exactly:
 
 ```markdown
 
@@ -99,8 +100,8 @@ CortexLink is installed and active. It gives you a persistent control center for
 - Claude CLI: [✅ installed / ❌ not found]
 
 **Commands:**
-- `/cortexlink:auto` — load all skills and activate orchestration mode explicitly
 - `/cortexlink:setup` — re-run this setup (re-auth, update agent status)
+- `/cortexlink:doctor` — diagnose the SessionStart hook, agents, and plugin files
 - `/cortexlink:help` — show skill and command reference
 ```
 
@@ -110,6 +111,3 @@ Fill in the actual agent status from Step 1 before writing.
 
 - ✅ All installed agents authenticated and both instruction files updated — tell the user CortexLink is ready and always-on in Claude Code and Copilot CLI.
 - ✅ Instruction files already had the section — tell the user CortexLink was already configured. Offer to re-run auth check if needed.
-
-In all cases, end with:
-> 🚀 Run `/cortexlink:auto` to activate multi-agent mode for this session.

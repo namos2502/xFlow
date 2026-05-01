@@ -1,7 +1,7 @@
 ---
 name: copilot-cli
-description: Behavioral reference for GitHub Copilot CLI. Use when delegating GitHub-specific or GitHub-adjacent tasks via `copilot -p`.
-
+description: This skill should be used when delegating GitHub-specific tasks — PRs, issues, repos, Actions, branches, code review — via `copilot -p`. Use it when Copilot CLI's GitHub-native tooling is an advantage over the host agent.
+user-invocable: false
 ---
 
 # Copilot CLI Agent
@@ -22,13 +22,27 @@ description: Behavioral reference for GitHub Copilot CLI. Use when delegating Gi
 
 | Flag | Purpose |
 |------|---------|
-| `-p "PROMPT"` | Programmatic mode — executes prompt and exits |
-| `-s` | Silent — output only the agent response (no usage stats) |
-| `--no-ask-user` | Agent works autonomously, no questions |
-| `--no-auto-update` | Suppress update checks |
-| `--no-color` | Plain text output |
+| `-p "PROMPT"` | Prompt flag — executes prompt non-interactively and exits |
+| `--no-ask-user` | Suppresses interactive permission prompts — required for non-interactive use |
+| `--no-auto-update` | Prevents Copilot from updating itself mid-run |
+| `--no-color` | Clean output, no ANSI escape codes |
+| `-s` | ❌ Causes exit code 1 — do not use |
 
-Always combine `-s --no-ask-user --no-auto-update --no-color` for clean programmatic output.
+Always combine `--no-ask-user --no-auto-update --no-color` for clean programmatic output.
+
+## Sandbox Limitation
+
+Copilot CLI is sandboxed to its working directory. With `--no-ask-user`, any file access outside that directory silently fails — no error, no output. There is no `--cwd` flag; the only fix is to `cd` to the repo root before invoking.
+
+⛔ **Always `cd` to the repo root before invoking.** Never call from a subdirectory.
+
+```bash
+# ❌ Sandboxed to client/ — reads outside it silently fail
+copilot -p "..." --no-ask-user ...
+
+# ✅ Correct — full repo accessible
+cd $(git rev-parse --show-toplevel) && copilot -p "..." --no-ask-user ...
+```
 
 ## Tool Permissions (`--allow-tool`)
 
@@ -37,15 +51,15 @@ Pre-approves tools so the agent doesn't pause to prompt.
 | Use case | Flag |
 |----------|------|
 | Questions, analysis, review | `--allow-tool='read'` |
-| Modify or create files | `--allow-tool='write, read'` |
-| Modify files + run git commands | `--allow-tool='write, shell(git:*), read'` |
+| Modify or create files | `--allow-tool='write,read'` |
+| Modify files + run git commands | `--allow-tool='write,shell(git:*),read'` |
 
 Shell access (`shell(...)`) is a separate, deliberate decision — not an automatic addition to write access. Only grant it when the task genuinely requires running commands.
 
 Use `--deny-tool` to block specific commands within an allowed scope:
 ```bash
 # Allow git reads but block pushes
---allow-tool='shell(git:*), read' --deny-tool='shell(git push)'
+--allow-tool='shell(git:*),read' --deny-tool='shell(git push)'
 ```
 Deny rules always override allow rules.
 
@@ -53,49 +67,64 @@ Deny rules always override allow rules.
 
 | Task | Flag |
 |------|-------|
-| Quick question, analysis | `--model=claude-haiku-4.5` |
-| Complex fix, multi-step | omit (uses session default) |
+| Availability check / quick question | `--model=claude-haiku-4.5` |
+| Real tasks — analysis, fix, review | `--model=claude-sonnet-4-5` |
 
 ## Invocation Patterns
 
 **Read-only delegation (question, analysis):**
 ```bash
-copilot -p "[delegation prompt]" -s --no-ask-user --no-auto-update --no-color \
-  --allow-tool='read' --model=claude-haiku-4.5
+cd $(git rev-parse --show-toplevel) && \
+copilot -p "[delegation prompt]" --no-ask-user --no-auto-update --no-color \
+  --allow-tool='read' --model=claude-sonnet-4-5
 ```
 
 **Write delegation (fix, implement):**
 ```bash
-copilot -p "[delegation prompt]" -s --no-ask-user --no-auto-update --no-color \
-  --allow-tool='write, read'
+cd $(git rev-parse --show-toplevel) && \
+copilot -p "[delegation prompt]" --no-ask-user --no-auto-update --no-color \
+  --allow-tool='write,read' --model=claude-sonnet-4-5
 ```
 
 **Write delegation + git (runs git commands):**
 ```bash
-copilot -p "[delegation prompt]" -s --no-ask-user --no-auto-update --no-color \
-  --allow-tool='write, shell(git:*), read'
+cd $(git rev-parse --show-toplevel) && \
+copilot -p "[delegation prompt]" --no-ask-user --no-auto-update --no-color \
+  --allow-tool='write,shell(git:*),read' --model=claude-sonnet-4-5
 ```
 
 **Code review (built-in /review agent):**
 ```bash
-copilot -p "/review [scope]" -s --no-ask-user --no-auto-update --no-color \
-  --allow-tool='shell(git:*), read'
+cd $(git rev-parse --show-toplevel) && \
+copilot -p "/review [scope]" --no-ask-user --no-auto-update --no-color \
+  --allow-tool='shell(git:*),read' --model=claude-sonnet-4-5
 ```
 
 Redirect stderr if needed: add `2>/dev/null`
 
 ## Delegation Prompt
 
-Follow the template from `skills/orchestration/SKILL.md`. Include the structured report format instructions at the end of every prompt.
+Copilot CLI has no `--append-system-prompt` flag, so CortexLink agent context must be prepended to every delegation prompt. **Always open every delegation prompt with this block:**
 
-⛔ **Critical:** Always include this exact line in your delegation prompt:
-*"Return ONLY the structured report. No reasoning steps, no 'Let me...' output before the report."*
+```
+You are operating as a CortexLink agent. Your output is consumed directly by a control center — not displayed to a user. Execute the task, verify your own work (Execute → Verify → fix if needed → Report), then return ONLY the structured report below. No reasoning steps, no "Let me..." output before the report.
+
+---
+
+[Task]: ...
+```
+
+The report format goes at the end (from the delegation template). The opening block teaches the agent the protocol — the closing block specifies this task's expected output.
+
+⛔ **Critical:** Never omit the opening CortexLink agent context block. Without it, Copilot CLI has no way to learn the report format or self-verify protocol.
 
 ## Handling the Report
 
 The agent's stdout is its report. Capture it directly:
 ```bash
-REPORT=$(copilot -p "[prompt]" -s --no-ask-user --no-auto-update --no-color --allow-tool='read' 2>/dev/null)
+REPORT=$(cd $(git rev-parse --show-toplevel) && \
+  copilot -p "[prompt]" --no-ask-user --no-auto-update --no-color \
+  --allow-tool='read' --model=claude-sonnet-4-5 2>/dev/null)
 ```
 
 Read STATUS first. If ⚠️ or ❌, read ISSUES before deciding next action.
