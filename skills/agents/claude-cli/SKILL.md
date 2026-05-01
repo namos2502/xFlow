@@ -70,7 +70,7 @@ Shell access (`Bash(...)`) is a separate, deliberate decision. Use `--disallowed
 | **Complex** — multi-step, judgment calls | `--model sonnet` | `--effort high` |
 | Quick availability check / ping | `--model claude-haiku-4-5` | `--effort low` |
 
-Use short aliases (`sonnet`, `opus`) for the latest version, or full IDs (e.g. `claude-sonnet-4-6`) to pin a specific model. Omit `--effort` to use the model default. Complexity levels are defined in the orchestration skill.
+Use short aliases (`sonnet`, `opus`) for the latest version, or full IDs (e.g. `claude-sonnet-4-6`) to pin a specific model. Omit `--effort` to use the model default. `--effort` is only available for Claude models — omit it when using non-Claude models. Complexity levels are defined in the orchestration skill.
 
 ## Working Directory
 
