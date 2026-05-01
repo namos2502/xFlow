@@ -2,7 +2,7 @@
 
 All notable changes to CortexLink will be documented here.
 
-## [0.5.8] — 2026-05-01
+## [0.6.0] — 2026-05-01
 
 ### Added
 - **Commands:** `doctor` command — replaces `auto`; symptom-first diagnostic that checks platform, plugin files, hook health, CLI agents, and setup state. Announces side effects before running; requires confirmation for live auth pings
