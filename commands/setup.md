@@ -48,7 +48,7 @@ If this fails, tell the user to run `claude auth login`.
 Read `~/.claude/CLAUDE.md` (create it if it does not exist). Check whether it already contains a `## CortexLink` section.
 
 - If the section **already exists** — skip the write and tell the user CortexLink is already configured.
-- If the section **does not exist** — append the following block exactly:
+- If the section **does not exist** — tell the user: "Appending CortexLink section to `~/.claude/CLAUDE.md`…" and show the block below, then append it exactly:
 
 ```markdown
 
@@ -80,7 +80,7 @@ Fill in the actual agent status from Step 1 before writing.
 Read `~/.copilot/copilot-instructions.md` (create it if it does not exist). Check whether it already contains a `## CortexLink` section.
 
 - If the section **already exists** — skip the write.
-- If the section **does not exist** — append the following block exactly:
+- If the section **does not exist** — tell the user: "Appending CortexLink section to `~/.copilot/copilot-instructions.md`…" and show the block below, then append it exactly:
 
 ```markdown
 
