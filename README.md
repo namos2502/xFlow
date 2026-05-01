@@ -97,7 +97,7 @@ Requires Claude Code v1.0.33+.
 | Command | What it does |
 |---------|-------------|
 | `/cortexlink:setup` | One-time setup — detects agents, authenticates, registers CortexLink as always-on in `~/.claude/CLAUDE.md` |
-| `/cortexlink:auto` | Explicitly load all skills and activate orchestration mode for this session |
+| `/cortexlink:doctor` | Diagnose the SessionStart hook, plugin files, and agent auth — asks about symptoms before running checks |
 | `/cortexlink:cleanup` | Remove CortexLink configuration added by setup |
 | `/cortexlink:help` | Show plugin information and commands |
 
@@ -118,7 +118,7 @@ skills/
       SKILL.md
 ```
 
-After `/cortexlink:setup`, the `~/.claude/CLAUDE.md` block makes CortexLink always-on — the orchestration protocol activates automatically every session. `/cortexlink:auto` is available as an explicit override if needed.
+After `/cortexlink:setup`, the `SessionStart` hook injects the orchestration protocol automatically on every new session — no extra command needed. Run `/cortexlink:doctor` if anything seems off.
 
 ## Routing
 

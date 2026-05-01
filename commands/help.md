@@ -13,13 +13,12 @@ CortexLink turns your active AI agent into a control center that decomposes task
 | Step | Command |
 |------|---------|
 | 1. One-time setup — detect agents, authenticate, register CortexLink | `/cortexlink:setup` |
-| 2. Activate multi-agent mode for this session | `/cortexlink:auto` |
 
 **Commands:**
 
 | Command | What it does |
 |---------|-------------|
 | `/cortexlink:setup` | Detect CLI agents, verify auth, register CortexLink as always-on |
-| `/cortexlink:auto` | Load all skills and activate orchestration mode for this session |
+| `/cortexlink:doctor` | Diagnose the SessionStart hook, plugin files, and agent auth |
 | `/cortexlink:cleanup` | Remove CortexLink configuration added by setup |
 | `/cortexlink:help` | Show this information |

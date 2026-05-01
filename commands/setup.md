@@ -68,8 +68,8 @@ CortexLink is installed and active. It gives you a persistent control center for
 - Claude CLI: [✅ installed / ❌ not found]
 
 **Commands:**
-- `/cortexlink:auto` — load all skills and activate orchestration mode explicitly
 - `/cortexlink:setup` — re-run this setup (re-auth, update agent status)
+- `/cortexlink:doctor` — diagnose the SessionStart hook, agents, and plugin files
 - `/cortexlink:help` — show skill and command reference
 ```
 
@@ -100,8 +100,8 @@ CortexLink is installed and active. It gives you a persistent control center for
 - Claude CLI: [✅ installed / ❌ not found]
 
 **Commands:**
-- `/cortexlink:auto` — load all skills and activate orchestration mode explicitly
 - `/cortexlink:setup` — re-run this setup (re-auth, update agent status)
+- `/cortexlink:doctor` — diagnose the SessionStart hook, agents, and plugin files
 - `/cortexlink:help` — show skill and command reference
 ```
 
@@ -111,6 +111,3 @@ Fill in the actual agent status from Step 1 before writing.
 
 - ✅ All installed agents authenticated and both instruction files updated — tell the user CortexLink is ready and always-on in Claude Code and Copilot CLI.
 - ✅ Instruction files already had the section — tell the user CortexLink was already configured. Offer to re-run auth check if needed.
-
-In all cases, end with:
-> 🚀 Run `/cortexlink:auto` to activate multi-agent mode for this session.
