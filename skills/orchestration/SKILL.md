@@ -88,7 +88,7 @@ New task →
 
 1. **Decompose** — Break into scoped, independently executable subtasks. Each must be verifiable by the agent itself.
 2. **Route** — Apply decision tree. Check agent availability (see `references/report-format.md`).
-3. **Dispatch** — Use delegation prompt template (see `references/delegation-template.md`). Always include scope, success criteria, report format. Each subtask goes to ONE agent — never dispatch the same work to two agents. Always run the target CLI with the prompt flag (`copilot -p` / `claude -p`); never open an interactive terminal session.
+3. **Dispatch** — Use delegation prompt template (see `references/delegation-template.md`). Always include scope, success criteria, report format. Each subtask goes to ONE agent — never dispatch the same work to two agents. Always run the target CLI with the prompt flag (`copilot -p` / `claude -p`); never open an interactive terminal session. **For independent subtasks, set `run_in_background: true` on each Bash tool call** so delegations fan out in parallel — do not wait for one agent to finish before dispatching the next.
 4. **Review** — Read STATUS first. Spot-check if needed (`git diff`, tests). Decide: proceed, re-assign, or adjust.
 5. **Track** — Update state (done / pending / failed). Never skip to the next subtask without reviewing the current report.
 6. **Synthesize** — Consolidate into one output for the user. Lead with issues (🔴 blocker / 🟠 should fix / 🟡 minor), then a one-sentence verdict. If any subtask is ❌, hold the verdict until resolved.

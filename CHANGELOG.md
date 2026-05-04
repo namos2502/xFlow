@@ -2,6 +2,11 @@
 
 All notable changes to CortexLink will be documented here.
 
+## [0.6.4] — 2026-05-04
+
+### Changed
+- **Orchestration:** Dispatch step and delegation template now instruct the agent to set `run_in_background: true` on each Bash tool call when fanning out independent subtasks in parallel
+
 ## [0.6.3] — 2026-05-04
 
 ### Changed
