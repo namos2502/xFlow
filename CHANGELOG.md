@@ -2,6 +2,12 @@
 
 All notable changes to CortexLink will be documented here.
 
+## [0.6.1] — 2026-05-04
+
+### Fixed
+- **Hooks:** `run-hook.cmd` converted from CRLF to LF line endings — eliminates `\r: command not found` errors on macOS/Linux (Windows 10/11 cmd.exe handles LF correctly)
+- **Hooks:** `.gitattributes` updated to enforce `eol=lf` for `run-hook.cmd` to prevent regression on checkout
+
 ## [0.6.0] — 2026-05-01
 
 ### Added
