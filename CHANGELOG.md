@@ -2,6 +2,11 @@
 
 All notable changes to CortexLink will be documented here.
 
+## [0.6.2] — 2026-05-04
+
+### Fixed
+- **Hooks:** `SessionStart` matcher expanded from `startup` to `startup|clear|compact` — hook now re-fires after `/clear` and `/compact`, restoring CLI reference context that was previously lost on session reset
+
 ## [0.6.1] — 2026-05-04
 
 ### Fixed
