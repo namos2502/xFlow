@@ -1,7 +1,7 @@
 {
   "name": "cortexlink",
   "description": "Cross-agent workflow plugin — gives your agent the full programmatic reference for every CLI tool you use. One plugin. Every CLI. Stay in flow.",
-  "version": "0.6.2",
+  "version": "0.6.3",
   "author": {
     "name": "namos2502"
   },

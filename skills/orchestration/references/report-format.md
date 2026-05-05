@@ -46,10 +46,12 @@ Execute → Verify → (fix if needed) → Report.
 
 Run these before delegating to verify agents are available:
 
+> Run `copilot models` to get the current fastest/cheapest Copilot model ID and substitute `<fastest-available>` below.
+
 ```bash
 # Copilot CLI
 which copilot 2>/dev/null && cd $(git rev-parse --show-toplevel) && \
-  copilot -p "ping" --no-ask-user --no-auto-update --no-color --allow-tool='read' --model=claude-haiku-4.5 2>/dev/null | head -1
+  copilot -p "ping" --no-ask-user --no-auto-update --no-color --allow-tool='read' --model=<fastest-available> 2>/dev/null | head -1
 
 # Claude CLI
 which claude 2>/dev/null && claude -p "ping" --output-format text --allowedTools "Read" --max-turns 1 --no-session-persistence 2>/dev/null | head -1

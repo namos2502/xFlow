@@ -31,6 +31,12 @@ The agent surfaces questions, you refine the spec if needed, then issue the exec
 
 # Cross-Agent Chaining
 
-Fan out to multiple Agents in parallel when tasks are independent. Pass a report excerpt (SUMMARY + STEPS) as context into the next delegation prompt — never raw output. Agents do not chain to each other; all coordination happens at the control center.
+Fan out to independent subtasks in parallel — do not serialize by default.
+
+**Native subagents (preferred):** emit multiple `Agent` tool calls in a single response — they execute concurrently. For long-running work, add `run_in_background: true` on the `Agent` tool call and collect results via `Read` on the output file.
+
+**Cross-CLI fan-out (`copilot -p` / `claude -p`):** background them with shell `&` in a single `Bash` call, write output to temp files, then `wait` and read results.
+
+Pass a report excerpt (SUMMARY + STEPS) as context into dependent delegation prompts — never raw output. Agents do not chain to each other; all coordination happens at the control center.
 
 **Avoid duplicate fetches:** When multiple agents need the same source data (e.g. a PR diff, a file's contents), fetch it once in the control center and pass it as `[Context]` in each delegation prompt. Do not let each agent re-fetch the same data independently.

@@ -2,6 +2,23 @@
 
 All notable changes to CortexLink will be documented here.
 
+## [0.6.3] — 2026-05-04
+
+### Changed
+- **Skills/Commands:** Hardcoded model version IDs removed across `copilot-cli` skill, `claude-cli` skill, `doctor` command, and `orchestration` report-format reference — replaced with `<fastest-available>` / `<capable-model>` placeholders and a note to run `copilot models` / `claude models` to get current names
+- **Orchestration:** Dispatch step and delegation template now instruct the agent to set `run_in_background: true` on each Bash tool call when fanning out independent subtasks in parallel
+- **Orchestration:** Major rewrite — native Agent tool promoted as first choice over cross-CLI; parallelism made the explicit default for independent subtasks
+- **Orchestration:** Added "Concurrency First" section — default parallel, serialize only on output dependency
+- **Orchestration:** Added "Concurrency Primitives" table — names `Agent` multi-call, `Agent` + `run_in_background: true`, and shell `&` patterns with correct tool targets
+- **Orchestration:** Iron Law updated — added `INDEPENDENT SUBTASKS RUN IN PARALLEL` and `PREFER NATIVE SUBAGENTS` rules
+- **Orchestration:** Control Center Protocol — Dispatch step rewritten (fixes incorrect `run_in_background` on Bash); new "Useful-wait" step added
+- **Orchestration:** Red Flags expanded; new "Green Flags" section added
+- **Orchestration:** Quick Reference updated — native subagent rows added, cross-CLI rows clarified as last resort
+- **Orchestration:** Restored dropped rules — Two-Tier Model now notes cross-CLI agents are "full CLI agents, not dumb executors"; "Width scales, depth stays fixed" architecture note restored
+- **Orchestration:** Dispatch step explicitly restates "always include scope, success criteria, and report format"
+- **Delegation template:** Cross-Agent Chaining section rewritten — correct parallel patterns for native Agent tool and cross-CLI `& wait`
+- **Delegation template:** "Do not let each agent re-fetch the same data independently" restored as explicit prohibition
+
 ## [0.6.2] — 2026-05-04
 
 ### Fixed

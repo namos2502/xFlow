@@ -65,10 +65,12 @@ Deny rules always override allow rules.
 
 ## Model Selection
 
+> Model IDs are versioned and change with releases. Run `copilot models` to get current names, then pick the fastest/cheapest for pings and a capable model for real tasks.
+
 | Task | Flag |
 |------|-------|
-| Availability check / quick question | `--model=claude-haiku-4.5` |
-| Real tasks — analysis, fix, review | `--model=claude-sonnet-4-5` |
+| Availability check / quick question | `--model=<fastest-available>` |
+| Real tasks — analysis, fix, review | `--model=<capable-model>` |
 
 ## Invocation Patterns
 

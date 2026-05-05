@@ -129,9 +129,11 @@ If found, ask the user: "Copilot CLI is installed. Do you want me to run an auth
 
 If yes:
 
+> Run `copilot models` first to get the current fastest/cheapest model ID, then substitute below.
+
 ```bash
 cd "$(git rev-parse --show-toplevel 2>/dev/null || echo "$HOME")" && \
-  copilot -p "ping" --no-ask-user --no-auto-update --no-color --allow-tool='read' --model=claude-haiku-4.5 2>/dev/null \
+  copilot -p "ping" --no-ask-user --no-auto-update --no-color --allow-tool='read' --model=<fastest-available> 2>/dev/null \
   && echo "AUTH_OK" || echo "AUTH_FAIL"
 ```
 
